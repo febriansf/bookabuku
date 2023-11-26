@@ -1,5 +1,4 @@
 import 'package:bookabuku/pages/login_pages.dart';
-import 'package:bookabuku/pages/welcome.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +15,6 @@ class MainApp extends StatelessWidget {
       initialRoute: LoginPage.id,
       routes: {
         LoginPage.id: (context) => LoginPage(),
-        WelcomePage.id: (context) => WelcomePage(),
       },
     );
   }

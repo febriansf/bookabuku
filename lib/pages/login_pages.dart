@@ -1,9 +1,6 @@
 import 'package:bookabuku/components/components.dart';
-import 'package:bookabuku/pages/welcome.dart';
 import 'package:bookabuku/utils/authentication.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -19,12 +16,6 @@ const List<String> scopes = <String>[
   'https://www.googleapis.com/auth/contacts.readonly',
 ];
 
-GoogleSignIn _googleSignIn = GoogleSignIn(
-  // Optional clientId
-  // clientId: 'your-client_id.apps.googleusercontent.com',
-  scopes: scopes,
-);
-
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
@@ -32,55 +23,41 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: Colors.blue[100],
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.only(left: 16, right: 16, bottom: 20),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.max,
             children: [
+              const Row(),
               Expanded(
-                child: Container(
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.contain,
-                      image: AssetImage('assets/images/signup.png'),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Flexible(
+                      flex: 1,
+                      child: Image.asset(
+                        'assets/images/signup.png',
+                        height: 260,
+                      ),
                     ),
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 2,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'Login Page',
-                        style: TextStyle(
-                          fontSize: 40,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const Text(
+                      'Login',
+                      style: TextStyle(
+                        color: Colors.black87,
+                        fontSize: 40,
                       ),
-                      const CustomTextField(
-                        textField: TextField(
-                          style: TextStyle(fontSize: 20),
-                          decoration: InputDecoration(
-                              border: InputBorder.none, hintText: 'Email'),
-                        ),
+                    ),
+                    const Text(
+                      'Page',
+                      style: TextStyle(
+                        color: Colors.black87,
+                        fontSize: 40,
                       ),
-                      const CustomTextField(
-                        textField: TextField(
-                          style: TextStyle(fontSize: 20),
-                          decoration: InputDecoration(
-                              border: InputBorder.none, hintText: 'Passwword'),
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: const Text('Login'),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
               FutureBuilder(
@@ -89,9 +66,9 @@ class _LoginPageState extends State<LoginPage> {
                   if (snapshot.hasError) {
                     return const Text('Error initializing Firebase');
                   } else if (snapshot.connectionState == ConnectionState.done) {
-                    return GoogleSignInButton();
+                    return const GoogleSignInButton();
                   }
-                  return CircularProgressIndicator(
+                  return const CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(
                       Colors.amber,
                     ),
@@ -101,32 +78,6 @@ class _LoginPageState extends State<LoginPage> {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Expanded GoogleSignInButton() {
-    return Expanded(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          IconButton(
-            onPressed: () async {
-              User? user =
-                  await Authentication.signInWithGoogle(context: context);
-
-              if (user != null) {
-                Navigator.pushNamed(context, WelcomePage.id);
-              }
-            },
-            icon: CircleAvatar(
-              radius: 25,
-              backgroundColor: Colors.transparent,
-              child: Image.asset('assets/images/icons/google.png'),
-            ),
-          ),
-        ],
       ),
     );
   }
