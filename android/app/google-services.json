@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "295019090453",
+    "project_id": "bookabuku-b5802",
+    "storage_bucket": "bookabuku-b5802.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:295019090453:android:5947c6df37b538e232f41c",
+        "android_client_info": {
+          "package_name": "com.example.bookabuku"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfb_2p6SHkEg_hSKQuJuhjR0fprW_l9Yg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

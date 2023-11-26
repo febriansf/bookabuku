@@ -1,5 +1,9 @@
 import 'package:bookabuku/components/components.dart';
+import 'package:bookabuku/pages/welcome.dart';
+import 'package:bookabuku/utils/authentication.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -8,6 +12,18 @@ class LoginPage extends StatefulWidget {
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
+
+/// The scopes required by this application.
+const List<String> scopes = <String>[
+  'email',
+  'https://www.googleapis.com/auth/contacts.readonly',
+];
+
+GoogleSignIn _googleSignIn = GoogleSignIn(
+  // Optional clientId
+  // clientId: 'your-client_id.apps.googleusercontent.com',
+  scopes: scopes,
+);
 
 class _LoginPageState extends State<LoginPage> {
   @override
@@ -61,31 +77,56 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       ElevatedButton(
                         onPressed: () {},
-                        child: Text('Login'),
+                        child: const Text('Login'),
                       ),
                     ],
                   ),
                 ),
               ),
-              Expanded(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: CircleAvatar(
-                        radius: 25,
-                        backgroundColor: Colors.transparent,
-                        child: Image.asset('assets/images/icons/google.png'),
-                      ),
+              FutureBuilder(
+                future: Authentication.initializeFirebase(context: context),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return const Text('Error initializing Firebase');
+                  } else if (snapshot.connectionState == ConnectionState.done) {
+                    return GoogleSignInButton();
+                  }
+                  return CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      Colors.amber,
                     ),
-                  ],
-                ),
+                  );
+                },
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Expanded GoogleSignInButton() {
+    return Expanded(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          IconButton(
+            onPressed: () async {
+              User? user =
+                  await Authentication.signInWithGoogle(context: context);
+
+              if (user != null) {
+                Navigator.pushNamed(context, WelcomePage.id);
+              }
+            },
+            icon: CircleAvatar(
+              radius: 25,
+              backgroundColor: Colors.transparent,
+              child: Image.asset('assets/images/icons/google.png'),
+            ),
+          ),
+        ],
       ),
     );
   }
