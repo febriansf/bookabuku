@@ -1,5 +1,6 @@
 import 'package:bookabuku/firebase_options.dart';
 import 'package:bookabuku/pages/welcome.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -50,6 +51,14 @@ class Authentication {
             await auth.signInWithCredential(credential);
 
         user = userCredential.user;
+        var db = FirebaseFirestore.instance;
+
+        final newUser = <String, dynamic>{
+          "name": "Br",
+          "uid": user?.uid,
+        };
+
+        db.collection("users").doc(user?.uid).set(newUser);
       } on FirebaseAuthException catch (e) {
         if (e.code == 'account-exists-with-different-credential') {
           // handle the error here

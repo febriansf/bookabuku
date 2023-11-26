@@ -19,6 +19,7 @@ class _WelcomePageState extends State<WelcomePage> {
   late User _user;
   bool _isSigningOut = false;
 
+  @override
   void initState() {
     _user = widget._user;
 
@@ -39,7 +40,7 @@ class _WelcomePageState extends State<WelcomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Row(),
+              const Row(),
               _user.photoURL != null
                   ? ClipOval(
                       child: Material(
@@ -53,8 +54,8 @@ class _WelcomePageState extends State<WelcomePage> {
                   : ClipOval(
                       child: Material(
                         color: Colors.amber[400]!.withOpacity(0.3),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
+                        child: const Padding(
+                          padding: EdgeInsets.all(16.0),
                           child: Icon(
                             Icons.person,
                             size: 60,
@@ -63,38 +64,38 @@ class _WelcomePageState extends State<WelcomePage> {
                         ),
                       ),
                     ),
-              SizedBox(
+              const SizedBox(
                 height: 16.0,
               ),
-              Text(
+              const Text(
                 'Hello',
                 style: TextStyle(color: Colors.grey, fontSize: 26),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8.0,
               ),
               Text(
                 _user.displayName!,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.yellow,
                   fontSize: 26,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8.0,
               ),
               Text(
                 '( ${_user.email!} )',
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.yellow,
                   fontSize: 26,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
               _isSigningOut
-                  ? CircularProgressIndicator(
+                  ? const CircularProgressIndicator(
                       valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                     )
                   : ElevatedButton(
@@ -107,7 +108,7 @@ class _WelcomePageState extends State<WelcomePage> {
                           ),
                         ),
                       ),
-                      child: Padding(
+                      child: const Padding(
                         padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
                         child: Text(
                           'Sign Out',
@@ -131,7 +132,7 @@ class _WelcomePageState extends State<WelcomePage> {
 
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
-                            builder: (context) => LoginPage(),
+                            builder: (context) => const LoginPage(),
                           ),
                         );
                       },
