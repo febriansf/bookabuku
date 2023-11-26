@@ -1,3 +1,4 @@
+import 'package:bookabuku/components/components.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -32,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
               Expanded(
                 flex: 2,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -44,8 +45,20 @@ class _LoginPageState extends State<LoginPage> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      CustomTextField(),
-                      CustomTextField(),
+                      const CustomTextField(
+                        textField: TextField(
+                          style: TextStyle(fontSize: 20),
+                          decoration: InputDecoration(
+                              border: InputBorder.none, hintText: 'Email'),
+                        ),
+                      ),
+                      const CustomTextField(
+                        textField: TextField(
+                          style: TextStyle(fontSize: 20),
+                          decoration: InputDecoration(
+                              border: InputBorder.none, hintText: 'Passwword'),
+                        ),
+                      ),
                       ElevatedButton(
                         onPressed: () {},
                         child: Text('Login'),
@@ -74,27 +87,6 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class CustomTextField extends StatelessWidget {
-  const CustomTextField({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(40),
-        border: Border.all(
-          width: 2.5,
-          color: Colors.amber,
-        ),
-      ),
-      child: TextField(),
     );
   }
 }
