@@ -54,7 +54,8 @@ class Authentication {
         var db = FirebaseFirestore.instance;
 
         final newUser = <String, dynamic>{
-          "name": "Br",
+          "name": user?.displayName,
+          "email": user?.email,
           "uid": user?.uid,
         };
 
