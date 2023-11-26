@@ -1,4 +1,5 @@
 import 'package:bookabuku/firebase_options.dart';
+import 'package:bookabuku/pages/welcome.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -11,6 +12,17 @@ class Authentication {
     FirebaseApp firebaseApp = await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
+
+    // Auto Login
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => WelcomePage(user: user),
+        ),
+      );
+    }
 
     return firebaseApp;
   }
