@@ -14,7 +14,6 @@ class Beranda extends StatefulWidget {
 }
 
 class _BerandaState extends State<Beranda> {
-  late User _user;
   bool _isSigningOut = false;
 
   Route _routeToLogInPage() {
@@ -39,7 +38,7 @@ class _BerandaState extends State<Beranda> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 16, right: 16, bottom: 20, top: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
       child: Column(
         children: [
           Row(),
