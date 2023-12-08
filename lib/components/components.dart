@@ -1,4 +1,4 @@
-import 'package:bookabuku/pages/welcome.dart';
+import 'package:bookabuku/pages/home_page.dart';
 import 'package:bookabuku/utils/authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -66,7 +66,7 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                   if (user != null) {
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => WelcomePage(user: user),
+                        builder: (context) => HomePage(user: user),
                       ),
                     );
                   }

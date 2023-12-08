@@ -1,4 +1,5 @@
 import 'package:bookabuku/components/components.dart';
+import 'package:bookabuku/constant.dart';
 import 'package:bookabuku/utils/authentication.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[100],
+      backgroundColor: kColor4,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 16, right: 16, bottom: 20),
@@ -44,16 +45,17 @@ class _LoginPageState extends State<LoginPage> {
                       height: 20,
                     ),
                     const Text(
-                      'Login',
+                      'BookaBuku',
                       style: TextStyle(
-                        color: Colors.black87,
-                        fontSize: 40,
+                        color: kColor2,
+                        fontSize: 50,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     const Text(
-                      'Page',
+                      'Login',
                       style: TextStyle(
-                        color: Colors.black87,
+                        color: kColor1,
                         fontSize: 40,
                       ),
                     ),

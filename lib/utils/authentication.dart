@@ -1,5 +1,5 @@
 import 'package:bookabuku/firebase_options.dart';
-import 'package:bookabuku/pages/welcome.dart';
+import 'package:bookabuku/pages/home_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -20,7 +20,7 @@ class Authentication {
     if (user != null) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => WelcomePage(user: user),
+          builder: (context) => HomePage(user: user),
         ),
       );
     }
