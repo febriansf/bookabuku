@@ -2,6 +2,7 @@ import 'package:bookabuku/pages/home_page.dart';
 import 'package:bookabuku/utils/authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:bookabuku/constant.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({super.key, required this.textField});
@@ -96,5 +97,61 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                   ),
                 ),
               ));
+  }
+}
+
+//list buku card
+class bookList extends StatelessWidget {
+  const bookList({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        children: [
+          Container(
+            width: 190,
+            margin: EdgeInsets.only(bottom: 10),
+            child: Card(
+              elevation: 0,
+              semanticContainer: true,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              child: Image.network(
+                'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1639163872l/58293924.jpg',
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+          Column(
+            children: [
+              Text("Book Of Night",
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF3EC6FF))),
+              Text("authorName",
+                  style: TextStyle(
+                      fontSize: 15.0,
+                      // fontWeight: FontWeight.bold,
+                      color: kColor5)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.star,
+                    color: kColor5,
+                    size: 17,
+                  ),
+                  Text("4.5 / 5",
+                      style: TextStyle(fontSize: 15.0, color: kColor5)),
+                ],
+              )
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }

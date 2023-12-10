@@ -3,6 +3,7 @@ import 'package:bookabuku/utils/authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:bookabuku/constant.dart';
+import 'package:bookabuku/components/components.dart';
 
 class Beranda extends StatefulWidget {
   const Beranda({Key? key, required User user})
@@ -19,9 +20,10 @@ class _BerandaState extends State<Beranda> {
 
   Route _routeToLogInPage() {
     return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => LoginPage(),
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          const LoginPage(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        var begin = Offset(-1.0, 0.0);
+        var begin = const Offset(-1.0, 0.0);
         var end = Offset.zero;
         var curve = Curves.ease;
 
@@ -38,76 +40,74 @@ class _BerandaState extends State<Beranda> {
 
   @override
   Widget build(BuildContext context) {
-    // return
-    //
     return SingleChildScrollView(
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      widget._user.photoURL != null
-                          ? ClipOval(
-                              child: Material(
-                                color: Colors.amber[200],
-                                child: Image.network(
-                                  widget._user.photoURL!,
-                                  fit: BoxFit.fitHeight,
-                                  scale: 2,
-                                ),
-                              ),
-                            )
-                          : ClipOval(
-                              child: Material(
-                                  color: Colors.amber[200],
-                                  child: Icon(
-                                    Icons.person,
-                                    size: 60,
-                                    color: Colors.grey[400],
-                                  )),
-                            ),
-                      _isSigningOut
-                          ? const CircularProgressIndicator(
-                              valueColor:
-                                  AlwaysStoppedAnimation<Color>(Colors.white),
-                            )
-                          : ElevatedButton(
-                              style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                      Colors.transparent)),
-                              onPressed: () async {
-                                setState(() {
-                                  _isSigningOut = true;
-                                });
+            // Padding(
+            //   padding:
+            //       const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
+            //   child: Column(
+            //     children: [
+            //       Row(
+            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //         children: [
+            //           widget._user.photoURL != null
+            //               ? ClipOval(
+            //                   child: Material(
+            //                     color: Colors.amber[200],
+            //                     child: Image.network(
+            //                       widget._user.photoURL!,
+            //                       fit: BoxFit.fitHeight,
+            //                       scale: 2.2,
+            //                     ),
+            //                   ),
+            //                 )
+            //               : ClipOval(
+            //                   child: Material(
+            //                       color: Colors.amber[200],
+            //                       child: Icon(
+            //                         Icons.person,
+            //                         size: 25,
+            //                         color: kColor5,
+            //                       )),
+            //                 ),
+            //           _isSigningOut
+            //               ? const CircularProgressIndicator(
+            //                   valueColor:
+            //                       AlwaysStoppedAnimation<Color>(Colors.white),
+            //                 )
+            //               : ElevatedButton(
+            //                   style: ButtonStyle(
+            //                       backgroundColor: MaterialStateProperty.all(
+            //                           Colors.transparent)),
+            //                   onPressed: () async {
+            //                     setState(() {
+            //                       _isSigningOut = true;
+            //                     });
 
-                                await Authentication.signOut(context: context);
-                                setState(() {
-                                  _isSigningOut = false;
-                                });
+            //                     await Authentication.signOut(context: context);
+            //                     setState(() {
+            //                       _isSigningOut = false;
+            //                     });
 
-                                Navigator.of(context)
-                                    .pushReplacement(_routeToLogInPage());
-                              },
-                              child: Icon(Icons.exit_to_app),
-                            )
-                    ],
-                  ),
-                ],
-              ),
-            ),
+            //                     Navigator.of(context)
+            //                         .pushReplacement(_routeToLogInPage());
+            //                   },
+            //                   child: Icon(Icons.exit_to_app),
+            //                 )
+            //         ],
+            //       ),
+            //     ],
+            //   ),
+            // ),
             Container(
               alignment: Alignment.topLeft,
-              margin: EdgeInsets.fromLTRB(20, 20, 0, 20),
-              child: Text(
-                'Hai, ' + widget._user.displayName!,
-                style: const TextStyle(
+              margin: const EdgeInsets.fromLTRB(20, 20, 0, 20),
+              child: const Text(
+                'Buku Rekomendasi',
+                style: TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
                   color: kColor5,
@@ -116,38 +116,33 @@ class _BerandaState extends State<Beranda> {
             ),
             Container(
               width: MediaQuery.of(context).size.width,
-              // height: 235,
-              margin: EdgeInsets.fromLTRB(16, 0, 16, 16),
+              margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
               child: Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.0),
                 ),
-                // color: Color(0xFF3EC6FF),
+                // color: kColor5,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  // mainAxisSize: MainAxisSize.start,
                   children: <Widget>[
-                    Text("Rekomendasi",
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF3EC6FF))),
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      height: 140,
-                      margin: EdgeInsets.fromLTRB(15, 0, 15, 15),
+                      height: 150,
                       child: Card(
+                        elevation: 0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         color: Colors.white,
                         child: Container(
-                          margin: EdgeInsets.all(10),
+                          margin: const EdgeInsets.all(10),
                           child: Row(
                             // mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Container(
-                                padding: EdgeInsets.fromLTRB(0, 0, 30, 0),
+                                padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
                                 child: Card(
                                   elevation: 0,
                                   shape: RoundedRectangleBorder(
@@ -167,8 +162,7 @@ class _BerandaState extends State<Beranda> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Container(
-                                    // alignment: Alignment.topRight,
-                                    child: Column(
+                                    child: const Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       mainAxisAlignment:
@@ -178,31 +172,42 @@ class _BerandaState extends State<Beranda> {
                                             style: TextStyle(
                                                 fontSize: 18.0,
                                                 fontWeight: FontWeight.bold,
-                                                color: Color(0xFF3EC6FF))),
-                                        Text("4.5 / 5",
+                                                color: kColor5)),
+                                        Text("authorName",
                                             style: TextStyle(
                                                 fontSize: 15.0,
                                                 // fontWeight: FontWeight.bold,
-                                                color: Color(0xFF3EC6FF))),
+                                                color: kColor5)),
+                                        Row(
+                                          children: [
+                                            Icon(
+                                              Icons.star,
+                                              color: kColor5,
+                                              size: 18,
+                                            ),
+                                            Text("4.5 / 5",
+                                                style: TextStyle(
+                                                    fontSize: 15.0,
+                                                    color: kColor5)),
+                                          ],
+                                        )
                                       ],
                                     ),
                                   ),
                                   Container(
-                                      // alignment: Alignment.bottomRight,
-                                      child: Container(
                                     width: 100,
-                                    height: 35,
+                                    height: 30,
                                     child: TextButton(
                                       onPressed: () {},
-                                      child: Text("Lihat buku   >",
+                                      style: TextButton.styleFrom(
+                                          backgroundColor: kColor5),
+                                      child: const Text("Lihat buku   >",
                                           style: TextStyle(
                                               fontSize: 12.0,
                                               // fontWeight: FontWeight.bold,
                                               color: Colors.white)),
-                                      style: TextButton.styleFrom(
-                                          backgroundColor: Color(0xFF3EC6FF)),
                                     ),
-                                  )),
+                                  ),
                                 ],
                               ),
                             ],
@@ -214,34 +219,97 @@ class _BerandaState extends State<Beranda> {
                 ),
               ),
             ),
-            Text("Rekomendasi",
-                style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF3EC6FF))),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text("Drama",
+                      style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                          color: kColor5)),
+                  TextButton(
+                      onPressed: () {},
+                      child: Text("Lebih banyak >",
+                          style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w300,
+                              color: kColor5)))
+                ],
+              ),
+            ),
             Column(
               children: [
                 Container(
-                  margin: EdgeInsets.fromLTRB(15, 0, 15, 5),
-                  child: Row(
+                  margin: const EdgeInsets.fromLTRB(15, 0, 15, 25),
+                  child: const Row(
                     children: [
                       bookList(),
                       bookList(),
                     ],
                   ),
                 ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text("Fantasi",
+                      style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                          color: kColor5)),
+                  TextButton(
+                      onPressed: () {},
+                      child: Text("Lebih banyak >",
+                          style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w300,
+                              color: kColor5)))
+                ],
+              ),
+            ),
+            Column(
+              children: [
                 Container(
-                  margin: EdgeInsets.fromLTRB(15, 10, 15, 5),
-                  child: Row(
+                  margin: const EdgeInsets.fromLTRB(15, 0, 15, 25),
+                  child: const Row(
                     children: [
                       bookList(),
                       bookList(),
                     ],
                   ),
                 ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text("Horor",
+                      style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                          color: kColor5)),
+                  TextButton(
+                      onPressed: () {},
+                      child: Text("Lebih banyak >",
+                          style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w300,
+                              color: kColor5)))
+                ],
+              ),
+            ),
+            Column(
+              children: [
                 Container(
-                  margin: EdgeInsets.fromLTRB(15, 10, 15, 5),
-                  child: Row(
+                  margin: const EdgeInsets.fromLTRB(15, 0, 15, 25),
+                  child: const Row(
                     children: [
                       bookList(),
                       bookList(),
@@ -252,45 +320,6 @@ class _BerandaState extends State<Beranda> {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class bookList extends StatelessWidget {
-  const bookList({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: 300,
-            child: Card(
-              elevation: 0,
-              semanticContainer: true,
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              child: Image.network(
-                'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1639163872l/58293924.jpg',
-                fit: BoxFit.contain,
-              ),
-            ),
-          ),
-          Text("Book Of Night",
-              style: TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF3EC6FF))),
-          Text("4.5/5",
-              style: TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF3EC6FF))),
-        ],
       ),
     );
   }
