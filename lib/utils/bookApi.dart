@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'package:books_finder/books_finder.dart';
 
 class BookSearcher {
