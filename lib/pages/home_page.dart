@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kColor3,
+      backgroundColor: kColor0,
       body: SafeArea(
         child: PageView(
           onPageChanged: (index) {
