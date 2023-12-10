@@ -79,14 +79,14 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                     children: <Widget>[
                       Image(
                         image: AssetImage('assets/images/icons/google.png'),
-                        height: 35.0,
+                        height: 20.0,
                       ),
                       Padding(
                         padding: EdgeInsets.only(left: 10),
                         child: Text(
                           'Sign in with Google',
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 15,
                             color: Colors.black54,
                             fontWeight: FontWeight.w600,
                           ),

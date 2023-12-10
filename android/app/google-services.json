@@ -1,62 +1,56 @@
 {
-  "project_info": {
-    "project_number": "295019090453",
-    "project_id": "bookabuku-b5802",
-    "storage_bucket": "bookabuku-b5802.appspot.com"
-  },
-  "client": [
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:295019090453:android:5947c6df37b538e232f41c",
-        "android_client_info": {
-          "package_name": "com.example.bookabuku"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "295019090453-1eptrdif0bg28mlikh0c1g8m8vniq5dn.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.bookabuku",
-            "certificate_hash": "18d7dff92d3e2d4dc76dceb4bfbd366a7a97118b"
-          }
+    "project_info": {
+        "project_number": "295019090453",
+        "project_id": "bookabuku-b5802",
+        "storage_bucket": "bookabuku-b5802.appspot.com"
+    },
+    "client": [{
+        "client_info": {
+            "mobilesdk_app_id": "1:295019090453:android:5947c6df37b538e232f41c",
+            "android_client_info": {
+                "package_name": "com.example.bookabuku"
+            }
         },
-        {
-          "client_id": "295019090453-io3c76db2j0i7dhrn24hiucet92m0ooo.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.bookabuku",
-            "certificate_hash": "fb35c1ed1b58cede9a6933d92733d59c5a1b0d4a"
-          }
-        },
-        {
-          "client_id": "295019090453-u2p2b84kia6d8vccaimiocnu00oajdjk.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAfb_2p6SHkEg_hSKQuJuhjR0fprW_l9Yg"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "295019090453-u2p2b84kia6d8vccaimiocnu00oajdjk.apps.googleusercontent.com",
-              "client_type": 3
+        "oauth_client": [{
+                "client_id": "295019090453-1eptrdif0bg28mlikh0c1g8m8vniq5dn.apps.googleusercontent.com",
+                "client_type": 1,
+                "android_info": {
+                    "package_name": "com.example.bookabuku",
+                    "certificate_hash": "18d7dff92d3e2d4dc76dceb4bfbd366a7a97118b"
+                }
             },
             {
-              "client_id": "295019090453-7sb4o35i6g8vt3k1p4j86frhmsgcbcka.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.bookabuku"
-              }
+                "client_id": "295019090453-io3c76db2j0i7dhrn24hiucet92m0ooo.apps.googleusercontent.com",
+                "client_type": 1,
+                "android_info": {
+                    "package_name": "com.example.bookabuku",
+                    "certificate_hash": "fb35c1ed1b58cede9a6933d92733d59c5a1b0d4a"
+                }
+            },
+            {
+                "client_id": "295019090453-u2p2b84kia6d8vccaimiocnu00oajdjk.apps.googleusercontent.com",
+                "client_type": 3
             }
-          ]
+        ],
+        "api_key": [{
+            "current_key": "AIzaSyAfb_2p6SHkEg_hSKQuJuhjR0fprW_l9Yg"
+        }],
+        "services": {
+            "appinvite_service": {
+                "other_platform_oauth_client": [{
+                        "client_id": "295019090453-u2p2b84kia6d8vccaimiocnu00oajdjk.apps.googleusercontent.com",
+                        "client_type": 3
+                    },
+                    {
+                        "client_id": "295019090453-7sb4o35i6g8vt3k1p4j86frhmsgcbcka.apps.googleusercontent.com",
+                        "client_type": 2,
+                        "ios_info": {
+                            "bundle_id": "com.example.bookabuku"
+                        }
+                    }
+                ]
+            }
         }
-      }
-    }
-  ],
-  "configuration_version": "1"
+    }],
+    "configuration_version": "1"
 }
