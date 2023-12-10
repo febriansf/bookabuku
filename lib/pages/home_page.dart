@@ -83,8 +83,8 @@ class _HomePageState extends State<HomePage> {
             textAlign: TextAlign.center,
           ),
           BottomNavyBarItem(
-            icon: const Icon(Icons.shelves),
-            title: const Text('Rak Buku'),
+            icon: const Icon(Icons.person),
+            title: const Text('Profil'),
             activeColor: kColor2,
             textAlign: TextAlign.center,
           ),

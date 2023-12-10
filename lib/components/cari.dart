@@ -33,7 +33,8 @@ class _SearchPageState extends State<SearchPage> {
               ),
             ),
           ),
-          SizedBox(
+          Container(
+            margin: EdgeInsets.only(bottom: 10),
             child: AnimatedSearchBar(
               label: "Search By Author, Title, or ISBN",
               labelStyle:
@@ -64,12 +65,14 @@ class _SearchPageState extends State<SearchPage> {
               final bookDetails = customBookList[index];
 
               return Container(
-                padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                padding: EdgeInsets.only(bottom: 20.0),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      width: 150,
-                      padding: EdgeInsets.all(5.0),
+                      width: 140,
+                      padding: EdgeInsets.only(right: 5),
                       child: Image.network(
                         bookDetails.imageLinks.isEmpty
                             ? defaultCover
@@ -78,36 +81,51 @@ class _SearchPageState extends State<SearchPage> {
                     ),
                     Expanded(
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Container(
+                            margin: EdgeInsets.only(top: 10.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(bookDetails.title,
                                     style: TextStyle(
-                                        fontSize: 18.0,
+                                        fontSize: 17.0,
                                         fontWeight: FontWeight.bold,
-                                        color: kColor5)),
+                                        color: kColor2)),
                                 Text(bookDetails.authors.first,
                                     style: TextStyle(
-                                        fontSize: 15.0, color: kColor5)),
+                                        fontSize: 14.0,
+                                        color: kColor2,
+                                        fontWeight: FontWeight.w400)),
                                 Text(
                                     bookDetails.publisher.isEmpty
                                         ? "Unknown Publisher"
                                         : bookDetails.publisher,
                                     style: TextStyle(
-                                        fontSize: 15.0, color: kColor5)),
+                                        fontSize: 14.0,
+                                        color: kColor2,
+                                        fontWeight: FontWeight.w400)),
+                                Text(
+                                    bookDetails.pageCount.toString() +
+                                        " halaman",
+                                    style: TextStyle(
+                                        fontSize: 14.0,
+                                        color: kColor2,
+                                        fontWeight: FontWeight.w400)),
                                 Row(
                                   children: [
                                     Icon(
                                       Icons.star,
-                                      color: kColor5,
+                                      color: kColor2,
                                       size: 18,
                                     ),
-                                    Text("4.5 / 5",
+                                    Text(
+                                        bookDetails.averageRating.toString() +
+                                            " / 5.0",
                                         style: TextStyle(
-                                            fontSize: 15.0, color: kColor5)),
+                                            fontSize: 14.0, color: kColor2)),
                                   ],
                                 )
                               ],
@@ -115,10 +133,10 @@ class _SearchPageState extends State<SearchPage> {
                           ),
                           // Text(bookDetails.title),
                           // Text(bookDetails.authors.first),
-                          Text(bookDetails.publisher.isEmpty
-                              ? "Unknown Publisher"
-                              : bookDetails.publisher),
-                          Text(bookDetails.pageCount.toString()),
+                          // Text(bookDetails.publisher.isEmpty
+                          //     ? "Unknown Publisher"
+                          //     : bookDetails.publisher),
+                          // Text(bookDetails.pageCount.toString()),
                         ],
                       ),
                     ),
