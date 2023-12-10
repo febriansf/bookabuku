@@ -13,6 +13,7 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   late List<BookInfo> customBookList = [];
+  bool _isSearching = false;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +37,7 @@ class _SearchPageState extends State<SearchPage> {
               ),
               onFieldSubmitted: (value) async {
                 BookSearcher searcher = BookSearcher();
+                _isSearching = true;
                 final result = await searcher.searchBooks(value);
 
                 setState(() {
@@ -50,9 +52,33 @@ class _SearchPageState extends State<SearchPage> {
             itemBuilder: (context, index) {
               final bookDetails = customBookList[index];
 
-              return SizedBox(
-                height: 200,
-                child: Text(bookDetails.title),
+              return Container(
+                padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 150,
+                      padding: EdgeInsets.all(5.0),
+                      child: Image.network(
+                        bookDetails.imageLinks.isEmpty
+                            ? defaultCover
+                            : bookDetails.imageLinks['thumbnail'].toString(),
+                      ),
+                    ),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Text(bookDetails.title),
+                          Text(bookDetails.authors.first),
+                          Text(bookDetails.publisher.isEmpty
+                              ? "Unknown Publisher"
+                              : bookDetails.publisher),
+                          Text(bookDetails.pageCount.toString()),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               );
             },
           ))
