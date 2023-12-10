@@ -11,11 +11,15 @@ class _ShelvesPageState extends State<ShelvesPage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: 16.0,
-        vertical: 20.0,
+      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
+      child: Column(
+        children: [
+          Row(),
+          Row(
+            children: [Text('RAK BUKU')],
+          ),
+        ],
       ),
-      child: Text('RAK BUKU'),
     );
   }
 }

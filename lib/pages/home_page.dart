@@ -51,8 +51,8 @@ class _HomePageState extends State<HomePage> {
           controller: _pageController,
           children: <Widget>[
             Beranda(user: _user),
-            SearchPage(),
-            ShelvesPage(),
+            const SearchPage(),
+            const ShelvesPage(),
           ],
         ),
       ),
@@ -69,21 +69,21 @@ class _HomePageState extends State<HomePage> {
         },
         items: <BottomNavyBarItem>[
           BottomNavyBarItem(
-            icon: Icon(Icons.home),
-            title: Text('Beranda'),
-            activeColor: Colors.purpleAccent,
+            icon: const Icon(Icons.home),
+            title: const Text('Beranda'),
+            activeColor: kColor2,
             textAlign: TextAlign.center,
           ),
           BottomNavyBarItem(
-            icon: Icon(Icons.search),
-            title: Text('Cari'),
-            activeColor: Colors.pink,
+            icon: const Icon(Icons.search),
+            title: const Text('Cari'),
+            activeColor: kColor2,
             textAlign: TextAlign.center,
           ),
           BottomNavyBarItem(
-            icon: Icon(Icons.shelves),
-            title: Text('Rak Buku'),
-            activeColor: Colors.blue,
+            icon: const Icon(Icons.shelves),
+            title: const Text('Rak Buku'),
+            activeColor: kColor2,
             textAlign: TextAlign.center,
           ),
         ],
@@ -98,23 +98,23 @@ FloatingActionButton buildFloatingActionButton() {
     onPressed: () {
       // handle search action
     },
-    child: Icon(Icons.search),
+    child: const Icon(Icons.search),
   );
 }
 
 Widget buildBottomNavigationBar() {
   return Container(
     child: Padding(
-      padding: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
       child: BottomNavigationBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         useLegacyColorScheme: false,
         currentIndex: 0,
         selectedLabelStyle:
-            TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+            const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
         unselectedLabelStyle:
-            TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         onTap: (value) {
           print('BottomNavigationBar onTap: $value');
         },
@@ -124,13 +124,13 @@ Widget buildBottomNavigationBar() {
               CircleAvatar(
                 radius: 24.0,
                 backgroundColor: Colors.grey[200],
-                child: Icon(
+                child: const Icon(
                   Icons.home,
                   color: Colors.black,
                   size: 30,
                 ),
               ),
-              Text('Beranda')
+              const Text('Beranda')
             ]),
             label: '',
           ),
@@ -138,7 +138,7 @@ Widget buildBottomNavigationBar() {
             icon: CircleAvatar(
               radius: 24.0,
               backgroundColor: Colors.grey[200],
-              child: Icon(
+              child: const Icon(
                 Icons.search,
                 color: Colors.black,
               ),
@@ -149,7 +149,7 @@ Widget buildBottomNavigationBar() {
             icon: CircleAvatar(
               radius: 24.0,
               backgroundColor: Colors.grey[200],
-              child: Icon(
+              child: const Icon(
                 Icons.shelves,
                 color: Colors.black,
               ),
