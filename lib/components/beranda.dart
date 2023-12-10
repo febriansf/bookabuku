@@ -104,13 +104,13 @@ class _BerandaState extends State<Beranda> {
             // ),
             Container(
               alignment: Alignment.topLeft,
-              margin: const EdgeInsets.fromLTRB(20, 20, 0, 20),
+              margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
               child: const Text(
                 'Buku Rekomendasi',
                 style: TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
-                  color: kColor5,
+                  color: kColor2,
                 ),
               ),
             ),
@@ -176,7 +176,6 @@ class _BerandaState extends State<Beranda> {
                                         Text("authorName",
                                             style: TextStyle(
                                                 fontSize: 15.0,
-                                                // fontWeight: FontWeight.bold,
                                                 color: kColor5)),
                                         Row(
                                           children: [
@@ -204,7 +203,6 @@ class _BerandaState extends State<Beranda> {
                                       child: const Text("Lihat buku   >",
                                           style: TextStyle(
                                               fontSize: 12.0,
-                                              // fontWeight: FontWeight.bold,
                                               color: Colors.white)),
                                     ),
                                   ),
@@ -226,16 +224,16 @@ class _BerandaState extends State<Beranda> {
                 children: [
                   const Text("Drama",
                       style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                          color: kColor5)),
+                          fontSize: 20.00,
+                          fontWeight: FontWeight.w500,
+                          color: kColor2)),
                   TextButton(
                       onPressed: () {},
                       child: Text("Lebih banyak >",
                           style: TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.w300,
-                              color: kColor5)))
+                              color: kColor2)))
                 ],
               ),
             ),
@@ -260,15 +258,15 @@ class _BerandaState extends State<Beranda> {
                   const Text("Fantasi",
                       style: TextStyle(
                           fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                          color: kColor5)),
+                          fontWeight: FontWeight.w500,
+                          color: kColor2)),
                   TextButton(
                       onPressed: () {},
                       child: Text("Lebih banyak >",
                           style: TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.w300,
-                              color: kColor5)))
+                              color: kColor2)))
                 ],
               ),
             ),
@@ -293,15 +291,15 @@ class _BerandaState extends State<Beranda> {
                   const Text("Horor",
                       style: TextStyle(
                           fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                          color: kColor5)),
+                          fontWeight: FontWeight.w500,
+                          color: kColor2)),
                   TextButton(
                       onPressed: () {},
                       child: Text("Lebih banyak >",
                           style: TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.w300,
-                              color: kColor5)))
+                              color: kColor2)))
                 ],
               ),
             ),

@@ -41,67 +41,70 @@ class _InfoUserPageState extends State<InfoUserPage> {
   Widget build(BuildContext context) {
     return Center(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              widget._user.photoURL != null
-                  ? ClipOval(
-                      child: Material(
-                        color: Colors.amber[200],
-                        child: Image.network(
-                          widget._user.photoURL!,
-                          fit: BoxFit.fitHeight,
-                          scale: 2.2,
-                        ),
-                      ),
-                    )
-                  : ClipOval(
-                      child: Material(
-                          color: Colors.amber[200],
-                          child: Icon(
-                            Icons.person,
-                            size: 25,
-                            color: kColor5,
-                          )),
+          widget._user.photoURL != null
+              ? ClipOval(
+                  child: Material(
+                    color: Colors.amber[200],
+                    child: Image.network(
+                      widget._user.photoURL!,
+                      fit: BoxFit.fitHeight,
+                      scale: 1.2,
                     ),
-              _isSigningOut
-                  ? const CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                    )
-                  : ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.transparent)),
-                      onPressed: () async {
-                        setState(() {
-                          _isSigningOut = true;
-                        });
-
-                        await Authentication.signOut(context: context);
-                        setState(() {
-                          _isSigningOut = false;
-                        });
-
-                        Navigator.of(context)
-                            .pushReplacement(_routeToLogInPage());
-                      },
-                      child: Icon(Icons.exit_to_app),
-                    )
-            ],
-          ),
+                  ),
+                )
+              : ClipOval(
+                  child: Material(
+                      color: Colors.amber[200],
+                      child: Icon(
+                        Icons.person,
+                        size: 75,
+                        color: kColor5,
+                      )),
+                ),
           Container(
-            alignment: Alignment.topLeft,
-            margin: EdgeInsets.fromLTRB(20, 20, 0, 20),
+            // alignment: Alignment.topLeft,
+            margin: EdgeInsets.fromLTRB(0, 5, 0, 15),
             child: Text(
               'Hai, ' + widget._user.displayName!,
               style: const TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold,
-                color: kColor5,
+                color: kColor2,
               ),
             ),
           ),
+          _isSigningOut
+              ? const CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                )
+              : TextButton.icon(
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.red.shade600)),
+                  onPressed: () async {
+                    setState(() {
+                      _isSigningOut = true;
+                    });
+
+                    await Authentication.signOut(context: context);
+                    setState(() {
+                      _isSigningOut = false;
+                    });
+
+                    Navigator.of(context).pushReplacement(_routeToLogInPage());
+                  },
+                  label: Text(
+                    "Logout",
+                    style: TextStyle(color: kColor0),
+                  ),
+                  icon: Icon(
+                    Icons.exit_to_app,
+                    color: kColor0,
+                  ),
+                ),
         ],
       ),
     );

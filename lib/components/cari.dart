@@ -21,12 +21,23 @@ class _SearchPageState extends State<SearchPage> {
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
       child: Column(
         children: <Widget>[
-          const Row(),
+          Container(
+            alignment: Alignment.topLeft,
+            margin: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+            child: const Text(
+              'Cari Buku',
+              style: TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+                color: kColor2,
+              ),
+            ),
+          ),
           SizedBox(
             child: AnimatedSearchBar(
               label: "Search By Author, Title, or ISBN",
               labelStyle:
-                  const TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+                  const TextStyle(fontSize: 17, fontWeight: FontWeight.w300),
               textInputAction: TextInputAction.done,
               searchDecoration: const InputDecoration(
                 label: Text("Seach Book"),
@@ -68,8 +79,42 @@ class _SearchPageState extends State<SearchPage> {
                     Expanded(
                       child: Column(
                         children: [
-                          Text(bookDetails.title),
-                          Text(bookDetails.authors.first),
+                          Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(bookDetails.title,
+                                    style: TextStyle(
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.bold,
+                                        color: kColor5)),
+                                Text(bookDetails.authors.first,
+                                    style: TextStyle(
+                                        fontSize: 15.0, color: kColor5)),
+                                Text(
+                                    bookDetails.publisher.isEmpty
+                                        ? "Unknown Publisher"
+                                        : bookDetails.publisher,
+                                    style: TextStyle(
+                                        fontSize: 15.0, color: kColor5)),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.star,
+                                      color: kColor5,
+                                      size: 18,
+                                    ),
+                                    Text("4.5 / 5",
+                                        style: TextStyle(
+                                            fontSize: 15.0, color: kColor5)),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          // Text(bookDetails.title),
+                          // Text(bookDetails.authors.first),
                           Text(bookDetails.publisher.isEmpty
                               ? "Unknown Publisher"
                               : bookDetails.publisher),
