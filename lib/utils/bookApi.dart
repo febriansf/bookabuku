@@ -86,15 +86,23 @@ class FirebaseConnector {
   Future addData(
       {required String title,
       required String author,
+      required String pageCount,
+      required String rating,
+      required String lang,
+      required String description,
       required String isbn13}) async {
     try {
       CollectionReference userCollectionRef =
           userDocRef.collection(collectionName);
 
       Map<String, dynamic> newData = {
-        'Title': title,
-        'Author': author,
-        'ISBN_13': isbn13,
+        'title': title,
+        'author': author,
+        'pageCount': pageCount,
+        'rating': rating,
+        'language': lang,
+        'description': description,
+        'isbn_13': isbn13,
       };
 
       final newDoc = await userCollectionRef.add(newData);

@@ -193,6 +193,10 @@ class _BookDetailPageState extends State<BookDetailPage> {
                     author: book.authors.isEmpty
                         ? "Unknown Author"
                         : book.authors.last,
+                    description: book.description,
+                    lang: book.language,
+                    pageCount: book.pageCount.toString(),
+                    rating: book.averageRating.toString(),
                     // Entahlah bagian ini aing bingung
                     isbn13: book.industryIdentifiers.isEmpty
                         ? 'Unknown ISBN'
