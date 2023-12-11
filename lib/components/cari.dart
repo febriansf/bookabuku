@@ -3,12 +3,15 @@ import 'package:bookabuku/constant.dart';
 import 'package:bookabuku/utils/bookApi.dart';
 import 'package:books_finder/books_finder.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:bookabuku/components/components.dart';
 import 'package:bookabuku/components/detail_buku.dart';
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({super.key});
-
+  const SearchPage({Key? key, required User user})
+      : _user = user,
+        super(key: key);
+  final User _user;
   @override
   State<SearchPage> createState() => _SearchPageState();
 }
@@ -79,15 +82,13 @@ class _SearchPageState extends State<SearchPage> {
                     itemCount: customBookList.length,
                     itemBuilder: (context, index) {
                       final bookDetails = customBookList[index];
-
                       return InkWell(
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => BookDetailPage(
-                                      book: bookDetails,
-                                    )),
+                                    book: bookDetails, user: widget._user)),
                           );
                         },
                         child: Container(

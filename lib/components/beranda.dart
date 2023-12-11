@@ -221,39 +221,6 @@ class _BerandaState extends State<Beranda> {
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text("Horor",
-                      style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.w500,
-                          color: kColor2)),
-                  TextButton(
-                      onPressed: () {},
-                      child: Text("Lebih banyak >",
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w300,
-                              color: kColor2)))
-                ],
-              ),
-            ),
-            Column(
-              children: [
-                Container(
-                  margin: const EdgeInsets.fromLTRB(15, 0, 15, 25),
-                  child: const Row(
-                    children: [
-                      bookList(),
-                      bookList(),
-                    ],
-                  ),
-                ),
-              ],
-            ),
           ],
         ),
       ),

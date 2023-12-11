@@ -4,7 +4,7 @@ import 'package:bookabuku/constant.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-// import 'package:bookabuku/components/info_user.dart';
+import 'package:bookabuku/components/info_user.dart';
 import 'package:bookabuku/components/dump.dart';
 
 class HomePage extends StatefulWidget {
@@ -52,9 +52,9 @@ class _HomePageState extends State<HomePage> {
           controller: _pageController,
           children: <Widget>[
             Beranda(),
-            SearchPage(),
-            // InfoUserPage(user: _user),
-            DumpPage(user: _user),
+            SearchPage(user: _user),
+            InfoUserPage(user: _user),
+            // DumpPage(user: _user),
           ],
         ),
       ),

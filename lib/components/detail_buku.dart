@@ -1,14 +1,23 @@
 import 'package:bookabuku/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:bookabuku/utils/bookApi.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:bookabuku/components/info_user.dart';
 
 class BookDetailPage extends StatefulWidget {
   final book;
-  const BookDetailPage({Key? key, required this.book}) : super(key: key);
+
+  const BookDetailPage({Key? key, required this.book, required User user})
+      : _user = user,
+        super(key: key);
+  final User _user;
+
   @override
   State<BookDetailPage> createState() => _BookDetailPageState();
 }
 
 class _BookDetailPageState extends State<BookDetailPage> {
+  late List booksCollection = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -142,6 +151,30 @@ class _BookDetailPageState extends State<BookDetailPage> {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: kColor2,
+        label: Text('Tambah Koleksi'),
+        onPressed: () async {
+          // Ganti dengan ID pengguna yang diinginkan
+
+          FirebaseConnector myConnector =
+              FirebaseConnector(widget._user.uid, 'myBooks');
+          myConnector.initializeConnector();
+
+          await myConnector.addData(
+            title: widget.book.title,
+            author: widget.book.author,
+            isbn13: widget.book.title,
+          );
+          final collections = await myConnector.getAllCollection();
+
+          setState(() {
+            booksCollection = collections;
+            print('success');
+          });
+        },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
