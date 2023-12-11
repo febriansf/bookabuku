@@ -130,7 +130,7 @@ class BookList extends StatelessWidget {
             ),
             const Column(
               children: [
-                Text("Book Of Night",
+                Text("Book Of Nightadsasda asd as d asd adasda",
                     style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,

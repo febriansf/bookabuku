@@ -31,11 +31,10 @@ class BookSearcher {
     return bookInfo;
   }
 
-  Future getBookDrama() async {
-    final List<Book> books = await queryBooks(
-      'Drama',
-      queryType: QueryType.subject,
-      maxResults: 4,
+  Future<List<BookInfo>> searchRandom(String query) async {
+    final books = await queryBooks(
+      query,
+      maxResults: 2,
       printType: PrintType.books,
       orderBy: OrderBy.relevance,
       reschemeImageLinks: true,

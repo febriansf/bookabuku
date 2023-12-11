@@ -1,4 +1,5 @@
 import 'package:bookabuku/pages/login_pages.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:bookabuku/constant.dart';
 import 'package:bookabuku/components/components.dart';
@@ -6,7 +7,11 @@ import 'package:bookabuku/utils/bookApi.dart';
 import 'package:books_finder/books_finder.dart';
 
 class Beranda extends StatefulWidget {
-  const Beranda({super.key});
+  const Beranda({Key? key, required User user})
+      : _user = user,
+        super(key: key);
+
+  final User _user;
 
   @override
   State<Beranda> createState() => _BerandaState();
@@ -34,9 +39,25 @@ class _BerandaState extends State<Beranda> {
   }
 
   Future<List<BookInfo>> getData() async {
+    // BookSearcher searcher = BookSearcher();
+
+    // final result = await searcher.searchBooks('value');
+    // customBookList = result;
+
+    // return customBookList;
+    FirebaseConnector myConnector =
+        FirebaseConnector(widget._user.uid, 'myBooks');
+    myConnector.initializeConnector();
+
+    final collections = await myConnector.getAllCollection();
+    customBookList = collections;
+    return customBookList;
+  }
+
+  Future<List<BookInfo>> getRandom() async {
     BookSearcher searcher = BookSearcher();
 
-    final result = await searcher.searchBooks('value');
+    final result = await searcher.searchRandom('Tech');
     customBookList = result;
 
     return customBookList;
@@ -49,31 +70,21 @@ class _BerandaState extends State<Beranda> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            FutureBuilder(
-              builder: (ctx, snapshot) {
+            FutureBuilder<List>(
+              builder: (context, snapshot) {
                 // Checking if future is resolved or not
-                if (snapshot.connectionState == ConnectionState.done) {
-                  // If we got an error
-                  if (snapshot.hasError) {
-                    return Center(
-                      child: Text(
-                        '${snapshot.error} occurred',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    );
-
-                    // if we got our data
-                  } else if (snapshot.hasData) {
-                    // Extracting data from snapshot object
-                    final data = snapshot.data as List;
-                    for (final book in data) {
-                      final info = book.title;
-                      // return Text(info);
-                      print('$info\n');
-                    }
-                  }
+                if (snapshot.hasData &&
+                    snapshot.connectionState == ConnectionState.done) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      return Text(snapshot.data?[index]['Title'] ?? "got null");
+                    },
+                  );
                 }
-
                 // Displaying LoadingSpinner to indicate waiting state
                 return Center(
                   child: CircularProgressIndicator(),
@@ -88,7 +99,7 @@ class _BerandaState extends State<Beranda> {
               alignment: Alignment.topLeft,
               margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
               child: const Text(
-                'Buku Rekomendasi',
+                'Koleksi Mu',
                 style: TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
@@ -103,11 +114,9 @@ class _BerandaState extends State<Beranda> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.0),
                 ),
-                // color: kColor5,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  // mainAxisSize: MainAxisSize.start,
                   children: <Widget>[
                     Container(
                       width: MediaQuery.of(context).size.width,
@@ -121,7 +130,6 @@ class _BerandaState extends State<Beranda> {
                         child: Container(
                           margin: const EdgeInsets.all(10),
                           child: Row(
-                            // mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Container(
                                 padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
@@ -204,7 +212,7 @@ class _BerandaState extends State<Beranda> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("Drama",
+                  const Text("Buku Rekomendasi",
                       style: TextStyle(
                           fontSize: 20.00,
                           fontWeight: FontWeight.w500,
@@ -219,51 +227,104 @@ class _BerandaState extends State<Beranda> {
                 ],
               ),
             ),
-            Column(
-              children: [
-                Container(
-                  margin: const EdgeInsets.fromLTRB(15, 0, 15, 25),
-                  child: const Row(
-                    children: [
-                      BookList(),
-                      BookList(),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text("Fantasi",
-                      style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.w500,
-                          color: kColor2)),
-                  TextButton(
-                      onPressed: () {},
-                      child: Text("Lebih banyak >",
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w300,
-                              color: kColor2)))
-                ],
-              ),
-            ),
-            Column(
-              children: [
-                Container(
-                  margin: const EdgeInsets.fromLTRB(15, 0, 15, 25),
-                  child: const Row(
-                    children: [
-                      BookList(),
-                      BookList(),
-                    ],
-                  ),
-                ),
-              ],
+            // Column(
+            //   children: [
+            //     Container(
+            //       margin: const EdgeInsets.fromLTRB(15, 0, 15, 25),
+            //       child: const Row(
+            //         children: [
+            //           BookList(),
+            //           BookList(),
+            //         ],
+            //       ),
+            //     ),
+            //   ],
+            // ),
+            FutureBuilder<List>(
+              builder: (context, snapshot) {
+                // Checking if future is resolved or not
+                if (snapshot.hasData &&
+                    snapshot.connectionState == ConnectionState.done) {
+                  return Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: List.generate(
+                        snapshot.data!.length,
+                        (index) {
+                          String title = snapshot.data?[index].title;
+                          double rating = snapshot.data?[index].averageRating;
+                          Uri image =
+                              snapshot.data?[index].imageLinks['thumbnail'];
+                          return Container(
+                            width: 180,
+                            // color: Colors.blue,
+                            margin: const EdgeInsets.fromLTRB(0, 0, 0, 70),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  // width: 190,
+                                  margin: EdgeInsets.only(bottom: 10),
+                                  child: Card(
+                                    elevation: 0,
+                                    semanticContainer: true,
+                                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                                    child: Image.network(
+                                      image.toString(),
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(title,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color(0xFF3EC6FF))),
+                                    // Text("authorName",
+                                    //     style: TextStyle(
+                                    //         fontSize: 15.0,
+                                    //         // fontWeight: FontWeight.bold,
+                                    //         color: kColor5)),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.star,
+                                          color: kColor5,
+                                          size: 17,
+                                        ),
+                                        Text(rating.toString() + " / 5.0",
+                                            style: TextStyle(
+                                                fontSize: 15.0,
+                                                color: kColor5)),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  );
+                }
+                // Displaying LoadingSpinner to indicate waiting state
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+
+              // Future that needs to be resolved
+              // inorder to display something on the Canvas
+              future: getRandom(),
             ),
           ],
         ),
@@ -273,10 +334,3 @@ class _BerandaState extends State<Beranda> {
 }
 
 late List<BookInfo> customBookList = [];
-
-void spawnDrama(List<String> args) async {
-  BookSearcher searcher = BookSearcher();
-
-  final result = await searcher.getBookDrama();
-  customBookList = result;
-}

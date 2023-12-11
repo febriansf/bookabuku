@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
           },
           controller: _pageController,
           children: <Widget>[
-            Beranda(),
+            Beranda(user: _user),
             SearchPage(user: _user),
             InfoUserPage(user: _user),
             // DumpPage(user: _user),
