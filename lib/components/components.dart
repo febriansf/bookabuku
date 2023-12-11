@@ -3,6 +3,7 @@ import 'package:bookabuku/utils/authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:bookabuku/constant.dart';
+import 'package:bookabuku/components/detail_buku.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({super.key, required this.textField});
@@ -110,49 +111,67 @@ class bookList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Column(
-        children: [
-          Container(
-            width: 190,
-            margin: EdgeInsets.only(bottom: 10),
-            child: Card(
-              elevation: 0,
-              semanticContainer: true,
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              child: Image.network(
-                'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1639163872l/58293924.jpg',
-                fit: BoxFit.contain,
+      child: InkWell(
+        onTap: () => _navigateToDetailsPage(context),
+        child: Column(
+          children: [
+            Container(
+              width: 190,
+              margin: EdgeInsets.only(bottom: 10),
+              child: Card(
+                elevation: 0,
+                semanticContainer: true,
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                child: Image.network(
+                  'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1639163872l/58293924.jpg',
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
-          ),
-          Column(
-            children: [
-              Text("Book Of Night",
-                  style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF3EC6FF))),
-              Text("authorName",
-                  style: TextStyle(
-                      fontSize: 15.0,
-                      // fontWeight: FontWeight.bold,
-                      color: kColor5)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.star,
-                    color: kColor5,
-                    size: 17,
-                  ),
-                  Text("4.5 / 5",
-                      style: TextStyle(fontSize: 15.0, color: kColor5)),
-                ],
-              )
-            ],
-          ),
-        ],
+            Column(
+              children: [
+                Text("Book Of Night",
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF3EC6FF))),
+                Text("authorName",
+                    style: TextStyle(
+                        fontSize: 15.0,
+                        // fontWeight: FontWeight.bold,
+                        color: kColor5)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.star,
+                      color: kColor5,
+                      size: 17,
+                    ),
+                    Text("4.5 / 5",
+                        style: TextStyle(fontSize: 15.0, color: kColor5)),
+                  ],
+                )
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
+}
+
+void _navigateToDetailsPage(BuildContext context) {
+  // Navigator.of(context).push(MaterialPageRoute(
+  //   builder: (context) => BookDetailPage(),
+  // ));
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => const BookDetailPage()),
+  );
+  // Navigator.of(context).push(
+  //   MaterialPageRoute(
+  //     builder: (context) => BookDetailPage(),
+  //   ),
+  // );
 }
