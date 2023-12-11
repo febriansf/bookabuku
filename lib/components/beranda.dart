@@ -225,8 +225,8 @@ class _BerandaState extends State<Beranda> {
                   margin: const EdgeInsets.fromLTRB(15, 0, 15, 25),
                   child: const Row(
                     children: [
-                      bookList(),
-                      bookList(),
+                      BookList(),
+                      BookList(),
                     ],
                   ),
                 ),
@@ -258,8 +258,8 @@ class _BerandaState extends State<Beranda> {
                   margin: const EdgeInsets.fromLTRB(15, 0, 15, 25),
                   child: const Row(
                     children: [
-                      bookList(),
-                      bookList(),
+                      BookList(),
+                      BookList(),
                     ],
                   ),
                 ),

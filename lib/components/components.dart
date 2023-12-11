@@ -3,7 +3,7 @@ import 'package:bookabuku/utils/authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:bookabuku/constant.dart';
-import 'package:bookabuku/components/detail_buku.dart';
+// import 'package:bookabuku/components/detail_buku.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({super.key, required this.textField});
@@ -18,7 +18,7 @@ class CustomTextField extends StatelessWidget {
         borderRadius: BorderRadius.circular(40),
         border: Border.all(
           width: 2.5,
-          color: Colors.amber,
+          color: kColor6,
         ),
       ),
       child: textField,
@@ -103,8 +103,8 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
 }
 
 //list buku card
-class bookList extends StatelessWidget {
-  const bookList({
+class BookList extends StatelessWidget {
+  const BookList({
     super.key,
   });
 
@@ -128,7 +128,7 @@ class bookList extends StatelessWidget {
                 ),
               ),
             ),
-            Column(
+            const Column(
               children: [
                 Text("Book Of Night",
                     style: TextStyle(
@@ -161,17 +161,17 @@ class bookList extends StatelessWidget {
   }
 }
 
-void navigateToDetailsPage(bookDetail, BuildContext context) {
-  // Navigator.push(
-  //   context,
-  //   MaterialPageRoute(builder: (context) => BookDetailPage(bookDetail)),
-  // );
-  // Navigator.of(context).push(MaterialPageRoute(
-  //   builder: (context) => BookDetailPage(),
-  // ));
-  // Navigator.of(context).push(
-  //   MaterialPageRoute(
-  //     builder: (context) => BookDetailPage(),
-  //   ),
-  // );
-}
+// void navigateToDetailsPage(bookDetail, BuildContext context) {
+//   // Navigator.push(
+//   //   context,
+//   //   MaterialPageRoute(builder: (context) => BookDetailPage(bookDetail)),
+//   // );
+//   // Navigator.of(context).push(MaterialPageRoute(
+//   //   builder: (context) => BookDetailPage(),
+//   // ));
+//   // Navigator.of(context).push(
+//   //   MaterialPageRoute(
+//   //     builder: (context) => BookDetailPage(),
+//   //   ),
+//   // );
+// }

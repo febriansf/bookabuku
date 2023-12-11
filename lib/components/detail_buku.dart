@@ -1,16 +1,16 @@
 import 'package:bookabuku/constant.dart';
+import 'package:books_finder/books_finder.dart';
 import 'package:flutter/material.dart';
 import 'package:bookabuku/utils/bookApi.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:bookabuku/components/info_user.dart';
 
 class BookDetailPage extends StatefulWidget {
-  final book;
-
-  const BookDetailPage({Key? key, required this.book, required User user})
+  const BookDetailPage({Key? key, required BookInfo book, required User user})
       : _user = user,
+        _book = book,
         super(key: key);
   final User _user;
+  final BookInfo _book;
 
   @override
   State<BookDetailPage> createState() => _BookDetailPageState();
@@ -18,6 +18,16 @@ class BookDetailPage extends StatefulWidget {
 
 class _BookDetailPageState extends State<BookDetailPage> {
   late List booksCollection = [];
+  late User user;
+  late BookInfo book;
+
+  void initState() {
+    user = widget._user;
+    book = widget._book;
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,24 +60,24 @@ class _BookDetailPageState extends State<BookDetailPage> {
                         semanticContainer: true,
                         clipBehavior: Clip.antiAliasWithSaveLayer,
                         child: Image.network(
-                          widget.book.imageLinks.isEmpty
+                          book.imageLinks.isEmpty
                               ? defaultCover
-                              : widget.book.imageLinks['thumbnail'].toString(),
+                              : book.imageLinks['thumbnail'].toString(),
                           fit: BoxFit.contain,
                         ),
                         // color: Color(0xFF3EC6FF),
                       ),
                     ),
-                    Text(widget.book.title,
+                    Text(book.title,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 22.0,
                             fontWeight: FontWeight.bold,
                             color: kColor1)),
                     Text(
-                        widget.book.authors.isEmpty
+                        book.authors.isEmpty
                             ? "Unknown Author"
-                            : widget.book.authors.last,
+                            : book.authors.last,
                         style: TextStyle(
                             fontSize: 15.0,
                             // fontWeight: FontWeight.bold,
@@ -94,7 +104,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                         children: [
                           Text("Halaman"),
                           Text(
-                            widget.book.pageCount.toString(),
+                            book.pageCount.toString(),
                             style: TextStyle(
                                 color: Color(0xFF3EC6FF),
                                 fontWeight: FontWeight.bold,
@@ -107,7 +117,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                         children: [
                           Text("Bahasa"),
                           Text(
-                            widget.book.language,
+                            book.language,
                             style: TextStyle(
                                 color: Color(0xFF3EC6FF),
                                 fontWeight: FontWeight.bold,
@@ -120,7 +130,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                         children: [
                           Text("Rating"),
                           Text(
-                            widget.book.averageRating.toString() + "/5.0",
+                            book.averageRating.toString() + "/5.0",
                             style: TextStyle(
                                 color: Color(0xFF3EC6FF),
                                 fontWeight: FontWeight.bold,
@@ -135,7 +145,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
               Container(
                 margin: EdgeInsets.all(24),
                 child: Text(
-                  widget.book.description,
+                  book.description,
                   style: TextStyle(
                     fontSize: 15.0,
                     // fontWeight: FontWeight.bold,
@@ -153,19 +163,21 @@ class _BookDetailPageState extends State<BookDetailPage> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: kColor2,
-        label: Text('Tambah Koleksi'),
+        label: Text('Tambahkan Koleksi'),
         onPressed: () async {
           // Ganti dengan ID pengguna yang diinginkan
 
           FirebaseConnector myConnector =
-              FirebaseConnector(widget._user.uid, 'myBooks');
+              FirebaseConnector(user.uid, 'myBooks');
           myConnector.initializeConnector();
 
           await myConnector.addData(
-            title: widget.book.title,
-            author: widget.book.author,
-            isbn13: widget.book.title,
-          );
+              title: book.title,
+              author:
+                  book.authors.isEmpty ? "Unknown Author" : book.authors.last,
+              isbn13: book.industryIdentifiers[0].type == 'ISBN_13'
+                  ? book.industryIdentifiers[0].identifier
+                  : book.industryIdentifiers[1].identifier);
           final collections = await myConnector.getAllCollection();
 
           setState(() {
