@@ -33,6 +33,15 @@ class _BerandaState extends State<Beranda> {
     );
   }
 
+  Future<List<BookInfo>> getData() async {
+    BookSearcher searcher = BookSearcher();
+
+    final result = await searcher.searchBooks('value');
+    customBookList = result;
+
+    return customBookList;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -40,6 +49,41 @@ class _BerandaState extends State<Beranda> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            FutureBuilder(
+              builder: (ctx, snapshot) {
+                // Checking if future is resolved or not
+                if (snapshot.connectionState == ConnectionState.done) {
+                  // If we got an error
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text(
+                        '${snapshot.error} occurred',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    );
+
+                    // if we got our data
+                  } else if (snapshot.hasData) {
+                    // Extracting data from snapshot object
+                    final data = snapshot.data as List;
+                    for (final book in data) {
+                      final info = book.title;
+                      // return Text(info);
+                      print('$info\n');
+                    }
+                  }
+                }
+
+                // Displaying LoadingSpinner to indicate waiting state
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+
+              // Future that needs to be resolved
+              // inorder to display something on the Canvas
+              future: getData(),
+            ),
             Container(
               alignment: Alignment.topLeft,
               margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
