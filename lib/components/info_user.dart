@@ -96,11 +96,11 @@ class _InfoUserPageState extends State<InfoUserPage> {
 
                     Navigator.of(context).pushReplacement(_routeToLogInPage());
                   },
-                  label: Text(
+                  label: const Text(
                     "Logout",
                     style: TextStyle(color: kColor0),
                   ),
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.exit_to_app,
                     color: kColor0,
                   ),
