@@ -5,6 +5,7 @@ import 'package:bookabuku/constant.dart';
 import 'package:bookabuku/components/components.dart';
 import 'package:bookabuku/utils/bookApi.dart';
 import 'package:books_finder/books_finder.dart';
+import 'package:bookabuku/components/detail_buku.dart';
 
 class Beranda extends StatefulWidget {
   const Beranda({Key? key, required User user})
@@ -71,6 +72,18 @@ class _BerandaState extends State<Beranda> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            Container(
+              alignment: Alignment.topLeft,
+              margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+              child: const Text(
+                'Koleksi Mu',
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  color: kColor2,
+                ),
+              ),
+            ),
             FutureBuilder<List>(
               builder: (context, snapshot) {
                 // Checking if future is resolved or not
@@ -89,25 +102,15 @@ class _BerandaState extends State<Beranda> {
                 }
                 // Displaying LoadingSpinner to indicate waiting state
                 return Center(
-                  child: CircularProgressIndicator(),
+                  child:
+                      // CircularProgressIndicator(),
+                      Text("Kamu belum memiliki koleksi buku"),
                 );
               },
 
               // Future that needs to be resolved
               // inorder to display something on the Canvas
               future: getData(),
-            ),
-            Container(
-              alignment: Alignment.topLeft,
-              margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-              child: const Text(
-                'Koleksi Mu',
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  color: kColor2,
-                ),
-              ),
             ),
             Container(
               width: MediaQuery.of(context).size.width,
@@ -258,59 +261,71 @@ class _BerandaState extends State<Beranda> {
                           double rating = snapshot.data?[index].averageRating;
                           Uri image =
                               snapshot.data?[index].imageLinks['thumbnail'];
-                          return Container(
-                            width: 180,
-                            // color: Colors.blue,
-                            margin: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  // width: 190,
-                                  margin: EdgeInsets.only(bottom: 10),
-                                  child: Card(
-                                    elevation: 0,
-                                    semanticContainer: true,
-                                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                                    child: Image.network(
-                                      image.toString(),
-                                      fit: BoxFit.contain,
+                          return InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => BookDetailPage(
+                                        book: snapshot.data?[index],
+                                        user: widget._user)),
+                              );
+                            },
+                            child: Container(
+                              width: 180,
+                              // color: Colors.blue,
+                              margin: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    // width: 190,
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    child: Card(
+                                      elevation: 0,
+                                      semanticContainer: true,
+                                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                                      child: Image.network(
+                                        image.toString(),
+                                        fit: BoxFit.contain,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(title,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.bold,
-                                            color: Color(0xFF3EC6FF))),
-                                    // Text("authorName",
-                                    //     style: TextStyle(
-                                    //         fontSize: 15.0,
-                                    //         // fontWeight: FontWeight.bold,
-                                    //         color: kColor5)),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.star,
-                                          color: kColor5,
-                                          size: 17,
-                                        ),
-                                        Text(rating.toString() + " / 5.0",
-                                            style: TextStyle(
-                                                fontSize: 15.0,
-                                                color: kColor5)),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ],
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text(title,
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.bold,
+                                              color: Color(0xFF3EC6FF))),
+                                      // Text("authorName",
+                                      //     style: TextStyle(
+                                      //         fontSize: 15.0,
+                                      //         // fontWeight: FontWeight.bold,
+                                      //         color: kColor5)),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.star,
+                                            color: kColor5,
+                                            size: 17,
+                                          ),
+                                          Text(rating.toString() + " / 5.0",
+                                              style: TextStyle(
+                                                  fontSize: 15.0,
+                                                  color: kColor5)),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           );
                         },
