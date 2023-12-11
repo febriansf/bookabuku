@@ -3,6 +3,7 @@ import 'package:books_finder/books_finder.dart';
 import 'package:flutter/material.dart';
 import 'package:bookabuku/utils/bookApi.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class BookDetailPage extends StatefulWidget {
   const BookDetailPage({Key? key, required BookInfo book, required User user})
@@ -21,6 +22,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
   late User user;
   late BookInfo book;
 
+  bool _isLoading = false;
+
+  @override
   void initState() {
     user = widget._user;
     book = widget._book;
@@ -68,25 +72,31 @@ class _BookDetailPageState extends State<BookDetailPage> {
                         // color: Color(0xFF3EC6FF),
                       ),
                     ),
+                    const Divider(
+                      color: kColor2,
+                    ),
                     Text(book.title,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 22.0,
                             fontWeight: FontWeight.bold,
                             color: kColor1)),
-                    Text(
-                        book.authors.isEmpty
-                            ? "Unknown Author"
-                            : book.authors.last,
-                        style: TextStyle(
-                            fontSize: 15.0,
-                            // fontWeight: FontWeight.bold,
-                            color: kColor2)),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: Text(
+                          book.authors.isEmpty
+                              ? "Unknown Author"
+                              : book.authors.last,
+                          style: TextStyle(
+                              fontSize: 15.0,
+                              // fontWeight: FontWeight.bold,
+                              color: kColor2)),
+                    ),
                   ],
                 ),
               ),
               Container(
-                margin: EdgeInsets.fromLTRB(24, 24, 24, 0),
+                margin: EdgeInsets.fromLTRB(24, 14, 24, 0),
                 width: MediaQuery.of(context).size.width,
                 height: 70,
                 // color: Colors.blue,
@@ -153,39 +163,57 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   textAlign: TextAlign.justify,
                 ),
               ),
-              TextField(
-                maxLines: null,
-                keyboardType: TextInputType.multiline,
-              )
+              const Divider(
+                color: kColor2,
+              ),
             ],
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: kColor2,
-        label: Text('Tambahkan Koleksi'),
-        onPressed: () async {
-          // Ganti dengan ID pengguna yang diinginkan
+      floatingActionButton: _isLoading
+          ? const CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(
+                kColor6,
+              ),
+            )
+          : FloatingActionButton.extended(
+              backgroundColor: kColor2,
+              label: Text('Tambahkan Koleksi'),
+              onPressed: () async {
+                setState(() {
+                  _isLoading = true;
+                });
 
-          FirebaseConnector myConnector =
-              FirebaseConnector(user.uid, 'myBooks');
-          myConnector.initializeConnector();
+                FirebaseConnector myConnector =
+                    FirebaseConnector(user.uid, 'myBooks');
+                myConnector.initializeConnector();
 
-          await myConnector.addData(
-              title: book.title,
-              author:
-                  book.authors.isEmpty ? "Unknown Author" : book.authors.last,
-              isbn13: book.industryIdentifiers[0].type == 'ISBN_13'
-                  ? book.industryIdentifiers[0].identifier
-                  : book.industryIdentifiers[1].identifier);
-          final collections = await myConnector.getAllCollection();
+                await myConnector.addData(
+                    title: book.title,
+                    author: book.authors.isEmpty
+                        ? "Unknown Author"
+                        : book.authors.last,
+                    // Entahlah bagian ini aing bingung
+                    isbn13: book.industryIdentifiers.isEmpty
+                        ? 'Unknown ISBN'
+                        : book.industryIdentifiers.length == 1
+                            ? book.industryIdentifiers[0].identifier.toString()
+                            : book.industryIdentifiers[0].type == 'ISBN_13'
+                                ? book.industryIdentifiers[0].identifier
+                                    .toString()
+                                : book.industryIdentifiers[1].identifier
+                                    .toString());
+                final collections = await myConnector.getAllCollection();
 
-          setState(() {
-            booksCollection = collections;
-            print('success');
-          });
-        },
-      ),
+                setState(() {
+                  booksCollection = collections;
+                  _isLoading = false;
+                  // print('success');
+                });
+
+                Fluttertoast.showToast(msg: "Berhasil Ditambahkan");
+              },
+            ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }

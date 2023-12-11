@@ -73,9 +73,10 @@ class _SearchPageState extends State<SearchPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                        kColor6,
-                      )),
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          kColor6,
+                        ),
+                      ),
                     ],
                   )
                 : ListView.builder(
