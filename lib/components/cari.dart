@@ -51,7 +51,7 @@ class _SearchPageState extends State<SearchPage> {
               ),
               onFieldSubmitted: (value) async {
                 BookSearcher searcher = BookSearcher();
-                // _isSearching = true;
+
                 setState(() {
                   _isSearching = true;
                 });

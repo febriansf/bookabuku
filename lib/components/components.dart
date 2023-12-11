@@ -47,7 +47,7 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
               )
             : OutlinedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(kColor4),
+                  backgroundColor: MaterialStateProperty.all(kColor0),
                   shape: MaterialStateProperty.all(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(40),
