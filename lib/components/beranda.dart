@@ -50,14 +50,15 @@ class _BerandaState extends State<Beranda> {
     myConnector.initializeConnector();
 
     final collections = await myConnector.getAllCollection();
+
     customBookList = collections;
-    return customBookList;
+    return collections;
   }
 
-  Future<List<BookInfo>> getRandom() async {
+  Future<List<BookInfo>> getRandom(value) async {
     BookSearcher searcher = BookSearcher();
 
-    final result = await searcher.searchRandom('Tech');
+    final result = await searcher.searchRandom(value);
     customBookList = result;
 
     return customBookList;
@@ -75,15 +76,16 @@ class _BerandaState extends State<Beranda> {
                 // Checking if future is resolved or not
                 if (snapshot.hasData &&
                     snapshot.connectionState == ConnectionState.done) {
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (context, index) {
-                      return Text(snapshot.data?[index]['Title'] ?? "got null");
-                    },
-                  );
+                  print('OKE');
+                  // return ListView.builder(
+                  //   shrinkWrap: true,
+                  //   scrollDirection: Axis.vertical,
+                  //   physics: NeverScrollableScrollPhysics(),
+                  //   itemCount: snapshot.data!.length,
+                  //   itemBuilder: (context, index) {
+                  //     return Text(snapshot.data?[index]['Title'] ?? "got null");
+                  //   },
+                  // );
                 }
                 // Displaying LoadingSpinner to indicate waiting state
                 return Center(
@@ -259,6 +261,92 @@ class _BerandaState extends State<Beranda> {
                           return Container(
                             width: 180,
                             // color: Colors.blue,
+                            margin: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  // width: 190,
+                                  margin: EdgeInsets.only(bottom: 10),
+                                  child: Card(
+                                    elevation: 0,
+                                    semanticContainer: true,
+                                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                                    child: Image.network(
+                                      image.toString(),
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(title,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color(0xFF3EC6FF))),
+                                    // Text("authorName",
+                                    //     style: TextStyle(
+                                    //         fontSize: 15.0,
+                                    //         // fontWeight: FontWeight.bold,
+                                    //         color: kColor5)),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.star,
+                                          color: kColor5,
+                                          size: 17,
+                                        ),
+                                        Text(rating.toString() + " / 5.0",
+                                            style: TextStyle(
+                                                fontSize: 15.0,
+                                                color: kColor5)),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  );
+                }
+                // Displaying LoadingSpinner to indicate waiting state
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+
+              // Future that needs to be resolved
+              // inorder to display something on the Canvas
+              future: getRandom('Novel'),
+            ),
+            FutureBuilder<List>(
+              builder: (context, snapshot) {
+                // Checking if future is resolved or not
+                if (snapshot.hasData &&
+                    snapshot.connectionState == ConnectionState.done) {
+                  return Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: List.generate(
+                        snapshot.data!.length,
+                        (index) {
+                          String title = snapshot.data?[index].title;
+                          double rating = snapshot.data?[index].averageRating;
+                          Uri image =
+                              snapshot.data?[index].imageLinks['thumbnail'];
+                          return Container(
+                            width: 180,
+                            // color: Colors.blue,
                             margin: const EdgeInsets.fromLTRB(0, 0, 0, 70),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -324,7 +412,7 @@ class _BerandaState extends State<Beranda> {
 
               // Future that needs to be resolved
               // inorder to display something on the Canvas
-              future: getRandom(),
+              future: getRandom('Potter'),
             ),
           ],
         ),
