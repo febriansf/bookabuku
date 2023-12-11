@@ -1,6 +1,5 @@
 import 'package:bookabuku/components/beranda.dart';
 import 'package:bookabuku/components/cari.dart';
-import 'package:bookabuku/components/rak_buku.dart';
 import 'package:bookabuku/constant.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -51,8 +50,8 @@ class _HomePageState extends State<HomePage> {
           },
           controller: _pageController,
           children: <Widget>[
-            Beranda(user: _user),
-            const SearchPage(),
+            Beranda(),
+            SearchPage(),
             InfoUserPage(user: _user),
             // const ShelvesPage(),
           ],
@@ -83,8 +82,8 @@ class _HomePageState extends State<HomePage> {
             textAlign: TextAlign.center,
           ),
           BottomNavyBarItem(
-            icon: const Icon(Icons.shelves),
-            title: const Text('Rak Buku'),
+            icon: const Icon(Icons.person),
+            title: const Text('Profil'),
             activeColor: kColor2,
             textAlign: TextAlign.center,
           ),

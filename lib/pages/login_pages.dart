@@ -72,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                   }
                   return const CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(
-                      Colors.amber,
+                      kColor6,
                     ),
                   );
                 },

@@ -41,11 +41,12 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
         padding: const EdgeInsets.only(bottom: 16.0),
         child: _isSigningIn
             ? const CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                // Warna Loading Circle jangan sama dengan BG lah
+                valueColor: AlwaysStoppedAnimation<Color>(kColor6),
               )
             : OutlinedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.white),
+                  backgroundColor: MaterialStateProperty.all(kColor4),
                   shape: MaterialStateProperty.all(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(40),

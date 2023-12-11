@@ -1,23 +1,16 @@
 import 'package:bookabuku/pages/login_pages.dart';
-import 'package:bookabuku/utils/authentication.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:bookabuku/constant.dart';
 import 'package:bookabuku/components/components.dart';
 
 class Beranda extends StatefulWidget {
-  const Beranda({Key? key, required User user})
-      : _user = user,
-        super(key: key);
-  final User _user;
+  const Beranda({super.key});
 
   @override
   State<Beranda> createState() => _BerandaState();
 }
 
 class _BerandaState extends State<Beranda> {
-  bool _isSigningOut = false;
-
   Route _routeToLogInPage() {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) =>
@@ -151,7 +144,7 @@ class _BerandaState extends State<Beranda> {
                                   semanticContainer: true,
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   child: Image.network(
-                                    'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1639163872l/58293924.jpg',
+                                    defaultCover,
                                     fit: BoxFit.contain,
                                   ),
                                 ),

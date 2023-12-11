@@ -33,7 +33,8 @@ class _SearchPageState extends State<SearchPage> {
               ),
             ),
           ),
-          SizedBox(
+          Container(
+            margin: const EdgeInsets.only(bottom: 10),
             child: AnimatedSearchBar(
               label: "Search By Author, Title, or ISBN",
               labelStyle:
@@ -48,85 +49,120 @@ class _SearchPageState extends State<SearchPage> {
               ),
               onFieldSubmitted: (value) async {
                 BookSearcher searcher = BookSearcher();
-                _isSearching = true;
-                final result = await searcher.searchBooks(value);
-
+                // _isSearching = true;
                 setState(() {
+                  _isSearching = true;
+                });
+
+                final result = await searcher.searchBooks(value);
+                setState(() {
+                  _isSearching = false;
                   customBookList = result;
                 });
               },
             ),
           ),
           Expanded(
-              child: ListView.builder(
-            itemCount: customBookList.length,
-            itemBuilder: (context, index) {
-              final bookDetails = customBookList[index];
+            child: _isSearching
+                ? const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                        kColor6,
+                      )),
+                    ],
+                  )
+                : ListView.builder(
+                    itemCount: customBookList.length,
+                    itemBuilder: (context, index) {
+                      final bookDetails = customBookList[index];
 
-              return Container(
-                padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 150,
-                      padding: EdgeInsets.all(5.0),
-                      child: Image.network(
-                        bookDetails.imageLinks.isEmpty
-                            ? defaultCover
-                            : bookDetails.imageLinks['thumbnail'].toString(),
-                      ),
-                    ),
-                    Expanded(
-                      child: Column(
-                        children: [
-                          Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(bookDetails.title,
-                                    style: TextStyle(
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.bold,
-                                        color: kColor5)),
-                                Text(bookDetails.authors.first,
-                                    style: TextStyle(
-                                        fontSize: 15.0, color: kColor5)),
-                                Text(
-                                    bookDetails.publisher.isEmpty
-                                        ? "Unknown Publisher"
-                                        : bookDetails.publisher,
-                                    style: TextStyle(
-                                        fontSize: 15.0, color: kColor5)),
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.star,
-                                      color: kColor5,
-                                      size: 18,
-                                    ),
-                                    Text("4.5 / 5",
-                                        style: TextStyle(
-                                            fontSize: 15.0, color: kColor5)),
-                                  ],
-                                )
-                              ],
+                      return Container(
+                        padding: const EdgeInsets.only(bottom: 20.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: 140,
+                              padding: const EdgeInsets.all(5.0),
+                              child: Image.network(
+                                bookDetails.imageLinks.isEmpty
+                                    ? defaultCover
+                                    : bookDetails.imageLinks['thumbnail']
+                                        .toString(),
+                              ),
                             ),
-                          ),
-                          // Text(bookDetails.title),
-                          // Text(bookDetails.authors.first),
-                          Text(bookDetails.publisher.isEmpty
-                              ? "Unknown Publisher"
-                              : bookDetails.publisher),
-                          Text(bookDetails.pageCount.toString()),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ))
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.only(
+                                        top: 10.0, left: 5),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(bookDetails.title,
+                                            style: const TextStyle(
+                                                fontSize: 17.0,
+                                                fontWeight: FontWeight.bold,
+                                                color: kColor2)),
+                                        const Divider(
+                                          color: kColor2,
+                                        ),
+                                        Text(
+                                          bookDetails.authors.isEmpty
+                                              ? "Unknown Author"
+                                              : bookDetails.authors.last,
+                                          style: const TextStyle(
+                                              fontSize: 14.0,
+                                              color: kColor2,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                        Text(
+                                            bookDetails.publisher.isEmpty
+                                                ? "Unknown Publisher"
+                                                : bookDetails.publisher,
+                                            style: const TextStyle(
+                                                fontSize: 14.0,
+                                                color: kColor2,
+                                                fontWeight: FontWeight.w400)),
+                                        Text("${bookDetails.pageCount} halaman",
+                                            style: const TextStyle(
+                                                fontSize: 14.0,
+                                                color: kColor2,
+                                                fontWeight: FontWeight.w400)),
+                                        Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.star,
+                                              color: kColor2,
+                                              size: 18,
+                                            ),
+                                            Text(
+                                                "${bookDetails.averageRating} / 5.0",
+                                                style: const TextStyle(
+                                                    fontSize: 14.0,
+                                                    color: kColor2)),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+          ),
         ],
       ),
     );

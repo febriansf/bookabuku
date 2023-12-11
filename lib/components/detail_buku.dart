@@ -47,7 +47,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                       semanticContainer: true,
                       clipBehavior: Clip.antiAliasWithSaveLayer,
                       child: Image.network(
-                        'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1639163872l/58293924.jpg',
+                        defaultCover,
                         fit: BoxFit.contain,
                       ),
                       // color: Color(0xFF3EC6FF),

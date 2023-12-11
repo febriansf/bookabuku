@@ -3,7 +3,6 @@ import 'package:bookabuku/utils/authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:bookabuku/constant.dart';
-import 'package:bookabuku/components/components.dart';
 
 class InfoUserPage extends StatefulWidget {
   const InfoUserPage({Key? key, required User user})
@@ -78,7 +77,8 @@ class _InfoUserPageState extends State<InfoUserPage> {
           ),
           _isSigningOut
               ? const CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  // Iki warna loading circle jangan putih lah
+                  valueColor: AlwaysStoppedAnimation<Color>(kColor3),
                 )
               : TextButton.icon(
                   style: ButtonStyle(

@@ -29,3 +29,13 @@ class BookSearcher {
     return bookInfo;
   }
 }
+
+// void main() async {
+//   BookSearcher searcher = BookSearcher();
+
+//   final List<BookInfo> result = await searcher.searchBooks('new');
+
+//   for (final book in result) {
+//     print('$book\n');
+//   }
+// }
