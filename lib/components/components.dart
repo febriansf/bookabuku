@@ -112,7 +112,7 @@ class bookList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: InkWell(
-        onTap: () => _navigateToDetailsPage(context),
+        // onTap: () => navigateToDetailsPage(context),
         child: Column(
           children: [
             Container(
@@ -161,14 +161,14 @@ class bookList extends StatelessWidget {
   }
 }
 
-void _navigateToDetailsPage(BuildContext context) {
+void navigateToDetailsPage(bookDetail, BuildContext context) {
+  // Navigator.push(
+  //   context,
+  //   MaterialPageRoute(builder: (context) => BookDetailPage(bookDetail)),
+  // );
   // Navigator.of(context).push(MaterialPageRoute(
   //   builder: (context) => BookDetailPage(),
   // ));
-  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => const BookDetailPage()),
-  );
   // Navigator.of(context).push(
   //   MaterialPageRoute(
   //     builder: (context) => BookDetailPage(),

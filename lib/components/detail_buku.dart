@@ -2,8 +2,8 @@ import 'package:bookabuku/constant.dart';
 import 'package:flutter/material.dart';
 
 class BookDetailPage extends StatefulWidget {
-  const BookDetailPage({super.key});
-
+  final book;
+  const BookDetailPage({Key? key, required this.book}) : super(key: key);
   @override
   State<BookDetailPage> createState() => _BookDetailPageState();
 }
@@ -47,7 +47,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                         // color: Color(0xFF3EC6FF),
                       ),
                     ),
-                    Text("Lorem Ipsum",
+                    Text(widget.book + "Lorem Ipsum",
                         style: TextStyle(
                             fontSize: 22.0,
                             fontWeight: FontWeight.bold,

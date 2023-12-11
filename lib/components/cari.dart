@@ -3,6 +3,8 @@ import 'package:bookabuku/constant.dart';
 import 'package:bookabuku/utils/bookApi.dart';
 import 'package:books_finder/books_finder.dart';
 import 'package:flutter/material.dart';
+import 'package:bookabuku/components/components.dart';
+import 'package:bookabuku/components/detail_buku.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -78,86 +80,98 @@ class _SearchPageState extends State<SearchPage> {
                     itemBuilder: (context, index) {
                       final bookDetails = customBookList[index];
 
-                      return Container(
-                        padding: const EdgeInsets.only(bottom: 20.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 140,
-                              padding: const EdgeInsets.all(5.0),
-                              child: Image.network(
-                                bookDetails.imageLinks.isEmpty
-                                    ? defaultCover
-                                    : bookDetails.imageLinks['thumbnail']
-                                        .toString(),
+                      return InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => BookDetailPage(
+                                      book: bookDetails,
+                                    )),
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.only(bottom: 20.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                width: 140,
+                                padding: const EdgeInsets.all(5.0),
+                                child: Image.network(
+                                  bookDetails.imageLinks.isEmpty
+                                      ? defaultCover
+                                      : bookDetails.imageLinks['thumbnail']
+                                          .toString(),
+                                ),
                               ),
-                            ),
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    margin: const EdgeInsets.only(
-                                        top: 10.0, left: 5),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(bookDetails.title,
-                                            style: const TextStyle(
-                                                fontSize: 17.0,
-                                                fontWeight: FontWeight.bold,
-                                                color: kColor2)),
-                                        const Divider(
-                                          color: kColor2,
-                                        ),
-                                        Text(
-                                          bookDetails.authors.isEmpty
-                                              ? "Unknown Author"
-                                              : bookDetails.authors.last,
-                                          style: const TextStyle(
-                                              fontSize: 14.0,
-                                              color: kColor2,
-                                              fontWeight: FontWeight.w400),
-                                        ),
-                                        Text(
-                                            bookDetails.publisher.isEmpty
-                                                ? "Unknown Publisher"
-                                                : bookDetails.publisher,
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                          top: 10.0, left: 5),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Text(bookDetails.title,
+                                              style: const TextStyle(
+                                                  fontSize: 17.0,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: kColor2)),
+                                          const Divider(
+                                            color: kColor2,
+                                          ),
+                                          Text(
+                                            bookDetails.authors.isEmpty
+                                                ? "Unknown Author"
+                                                : bookDetails.authors.last,
                                             style: const TextStyle(
                                                 fontSize: 14.0,
                                                 color: kColor2,
-                                                fontWeight: FontWeight.w400)),
-                                        Text("${bookDetails.pageCount} halaman",
-                                            style: const TextStyle(
-                                                fontSize: 14.0,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                          Text(
+                                              bookDetails.publisher.isEmpty
+                                                  ? "Unknown Publisher"
+                                                  : bookDetails.publisher,
+                                              style: const TextStyle(
+                                                  fontSize: 14.0,
+                                                  color: kColor2,
+                                                  fontWeight: FontWeight.w400)),
+                                          Text(
+                                              "${bookDetails.pageCount} halaman",
+                                              style: const TextStyle(
+                                                  fontSize: 14.0,
+                                                  color: kColor2,
+                                                  fontWeight: FontWeight.w400)),
+                                          Row(
+                                            children: [
+                                              const Icon(
+                                                Icons.star,
                                                 color: kColor2,
-                                                fontWeight: FontWeight.w400)),
-                                        Row(
-                                          children: [
-                                            const Icon(
-                                              Icons.star,
-                                              color: kColor2,
-                                              size: 18,
-                                            ),
-                                            Text(
-                                                "${bookDetails.averageRating} / 5.0",
-                                                style: const TextStyle(
-                                                    fontSize: 14.0,
-                                                    color: kColor2)),
-                                          ],
-                                        )
-                                      ],
+                                                size: 18,
+                                              ),
+                                              Text(
+                                                  "${bookDetails.averageRating} / 5.0",
+                                                  style: const TextStyle(
+                                                      fontSize: 14.0,
+                                                      color: kColor2)),
+                                            ],
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       );
                     },

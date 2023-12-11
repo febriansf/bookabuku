@@ -30,6 +30,20 @@ class BookSearcher {
     final bookInfo = books.last.info;
     return bookInfo;
   }
+
+  Future getBookDrama() async {
+    final List<Book> books = await queryBooks(
+      'Drama',
+      queryType: QueryType.subject,
+      maxResults: 4,
+      printType: PrintType.books,
+      orderBy: OrderBy.relevance,
+      reschemeImageLinks: true,
+    );
+
+    final bookInfoList = books.map((book) => book.info).toList();
+    return bookInfoList;
+  }
 }
 
 class FirebaseConnector {

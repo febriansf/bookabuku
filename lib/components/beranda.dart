@@ -2,6 +2,8 @@ import 'package:bookabuku/pages/login_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:bookabuku/constant.dart';
 import 'package:bookabuku/components/components.dart';
+import 'package:bookabuku/utils/bookApi.dart';
+import 'package:books_finder/books_finder.dart';
 
 class Beranda extends StatefulWidget {
   const Beranda({super.key});
@@ -38,63 +40,6 @@ class _BerandaState extends State<Beranda> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            // Padding(
-            //   padding:
-            //       const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
-            //   child: Column(
-            //     children: [
-            //       Row(
-            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //         children: [
-            //           widget._user.photoURL != null
-            //               ? ClipOval(
-            //                   child: Material(
-            //                     color: Colors.amber[200],
-            //                     child: Image.network(
-            //                       widget._user.photoURL!,
-            //                       fit: BoxFit.fitHeight,
-            //                       scale: 2.2,
-            //                     ),
-            //                   ),
-            //                 )
-            //               : ClipOval(
-            //                   child: Material(
-            //                       color: Colors.amber[200],
-            //                       child: Icon(
-            //                         Icons.person,
-            //                         size: 25,
-            //                         color: kColor5,
-            //                       )),
-            //                 ),
-            //           _isSigningOut
-            //               ? const CircularProgressIndicator(
-            //                   valueColor:
-            //                       AlwaysStoppedAnimation<Color>(Colors.white),
-            //                 )
-            //               : ElevatedButton(
-            //                   style: ButtonStyle(
-            //                       backgroundColor: MaterialStateProperty.all(
-            //                           Colors.transparent)),
-            //                   onPressed: () async {
-            //                     setState(() {
-            //                       _isSigningOut = true;
-            //                     });
-
-            //                     await Authentication.signOut(context: context);
-            //                     setState(() {
-            //                       _isSigningOut = false;
-            //                     });
-
-            //                     Navigator.of(context)
-            //                         .pushReplacement(_routeToLogInPage());
-            //                   },
-            //                   child: Icon(Icons.exit_to_app),
-            //                 )
-            //         ],
-            //       ),
-            //     ],
-            //   ),
-            // ),
             Container(
               alignment: Alignment.topLeft,
               margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
@@ -314,4 +259,13 @@ class _BerandaState extends State<Beranda> {
       ),
     );
   }
+}
+
+late List<BookInfo> customBookList = [];
+
+void spawnDrama(List<String> args) async {
+  BookSearcher searcher = BookSearcher();
+
+  final result = await searcher.getBookDrama();
+  customBookList = result;
 }
