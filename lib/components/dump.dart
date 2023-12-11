@@ -83,11 +83,17 @@ class _DumpPageState extends State<DumpPage> {
                       FirebaseConnector(userId, 'myBooks');
                   myConnector.initializeConnector();
 
-                  myConnector.addData(
+                  await myConnector.addData(
                     title: _titleController.text,
                     author: _authorController.text,
                     isbn13: _isbnController.text,
                   );
+                  final collections = await myConnector.getAllCollection();
+
+                  setState(() {
+                    _isLoading = false;
+                    booksCollection = collections;
+                  });
                 },
                 child: Text('Add'),
               ),
