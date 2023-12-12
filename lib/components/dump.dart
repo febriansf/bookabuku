@@ -75,28 +75,28 @@ class _DumpPageState extends State<DumpPage> {
               const SizedBox(
                 width: 10,
               ),
-              ElevatedButton(
-                onPressed: () async {
-                  // Ganti dengan ID pengguna yang diinginkan
+              // ElevatedButton(
+              //   onPressed: () async {
+              //     // Ganti dengan ID pengguna yang diinginkan
 
-                  FirebaseConnector myConnector =
-                      FirebaseConnector(userId, 'myBooks');
-                  myConnector.initializeConnector();
+              //     FirebaseConnector myConnector =
+              //         FirebaseConnector(userId, 'myBooks');
+              //     myConnector.initializeConnector();
 
-                  await myConnector.addData(
-                    title: _titleController.text,
-                    author: _authorController.text,
-                    isbn13: _isbnController.text,
-                  );
-                  final collections = await myConnector.getAllCollection();
+              //     await myConnector.addData(
+              //       title: _titleController.text,
+              //       author: _authorController.text,
+              //       isbn13: _isbnController.text,
+              //     );
+              //     final collections = await myConnector.getAllCollection();
 
-                  setState(() {
-                    _isLoading = false;
-                    booksCollection = collections;
-                  });
-                },
-                child: Text('Add'),
-              ),
+              //     setState(() {
+              //       _isLoading = false;
+              //       booksCollection = collections;
+              //     });
+              //   },
+              //   child: Text('Add'),
+              // ),
               const SizedBox(
                 width: 10,
               ),

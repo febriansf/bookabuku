@@ -217,7 +217,7 @@ class _BerandaState extends State<Beranda> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("Buku Rekomendasi",
+                  const Text("Koleksiku",
                       style: TextStyle(
                           fontSize: 20.00,
                           fontWeight: FontWeight.w500,
@@ -232,35 +232,23 @@ class _BerandaState extends State<Beranda> {
                 ],
               ),
             ),
-            // Column(
-            //   children: [
-            //     Container(
-            //       margin: const EdgeInsets.fromLTRB(15, 0, 15, 25),
-            //       child: const Row(
-            //         children: [
-            //           BookList(),
-            //           BookList(),
-            //         ],
-            //       ),
-            //     ),
-            //   ],
-            // ),
-            FutureBuilder<List>(
+            FutureBuilder(
               builder: (context, snapshot) {
                 // Checking if future is resolved or not
                 if (snapshot.hasData &&
                     snapshot.connectionState == ConnectionState.done) {
+                  final book = snapshot.data;
                   return Center(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: List.generate(
-                        snapshot.data!.length,
+                        book!.length,
                         (index) {
-                          String title = snapshot.data?[index].title;
-                          double rating = snapshot.data?[index].averageRating;
-                          Uri image =
-                              snapshot.data?[index].imageLinks['thumbnail'];
+                          String title = book[index].data()['title'];
+                          String rating = book[index].data()?['rating'];
+                          String image =
+                              snapshot.data?[index].data()['thumbnail'];
                           return InkWell(
                             onTap: () {
                               Navigator.push(
@@ -286,7 +274,7 @@ class _BerandaState extends State<Beranda> {
                                       semanticContainer: true,
                                       clipBehavior: Clip.antiAliasWithSaveLayer,
                                       child: Image.network(
-                                        image.toString(),
+                                        image,
                                         fit: BoxFit.contain,
                                       ),
                                     ),
@@ -341,7 +329,28 @@ class _BerandaState extends State<Beranda> {
 
               // Future that needs to be resolved
               // inorder to display something on the Canvas
-              future: getRandom('Novel'),
+              future: FirebaseConnector(widget._user.uid, 'myBooks')
+                  .getAllCollection(),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text("Buku Rekomendasi",
+                      style: TextStyle(
+                          fontSize: 20.00,
+                          fontWeight: FontWeight.w500,
+                          color: kColor2)),
+                  TextButton(
+                      onPressed: () {},
+                      child: Text("Lebih banyak >",
+                          style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w300,
+                              color: kColor2)))
+                ],
+              ),
             ),
             FutureBuilder<List>(
               builder: (context, snapshot) {
@@ -359,59 +368,71 @@ class _BerandaState extends State<Beranda> {
                           double rating = snapshot.data?[index].averageRating;
                           Uri image =
                               snapshot.data?[index].imageLinks['thumbnail'];
-                          return Container(
-                            width: 180,
-                            // color: Colors.blue,
-                            margin: const EdgeInsets.fromLTRB(0, 0, 0, 70),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  // width: 190,
-                                  margin: EdgeInsets.only(bottom: 10),
-                                  child: Card(
-                                    elevation: 0,
-                                    semanticContainer: true,
-                                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                                    child: Image.network(
-                                      image.toString(),
-                                      fit: BoxFit.contain,
+                          return InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => BookDetailPage(
+                                        book: snapshot.data?[index],
+                                        user: widget._user)),
+                              );
+                            },
+                            child: Container(
+                              width: 180,
+                              // color: Colors.blue,
+                              margin: const EdgeInsets.fromLTRB(0, 0, 0, 70),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    // width: 190,
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    child: Card(
+                                      elevation: 0,
+                                      semanticContainer: true,
+                                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                                      child: Image.network(
+                                        image.toString(),
+                                        fit: BoxFit.contain,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(title,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.bold,
-                                            color: Color(0xFF3EC6FF))),
-                                    // Text("authorName",
-                                    //     style: TextStyle(
-                                    //         fontSize: 15.0,
-                                    //         // fontWeight: FontWeight.bold,
-                                    //         color: kColor5)),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.star,
-                                          color: kColor5,
-                                          size: 17,
-                                        ),
-                                        Text(rating.toString() + " / 5.0",
-                                            style: TextStyle(
-                                                fontSize: 15.0,
-                                                color: kColor5)),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ],
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text(title,
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.bold,
+                                              color: Color(0xFF3EC6FF))),
+                                      // Text("authorName",
+                                      //     style: TextStyle(
+                                      //         fontSize: 15.0,
+                                      //         // fontWeight: FontWeight.bold,
+                                      //         color: kColor5)),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.star,
+                                            color: kColor5,
+                                            size: 17,
+                                          ),
+                                          Text(rating.toString() + " / 5.0",
+                                              style: TextStyle(
+                                                  fontSize: 15.0,
+                                                  color: kColor5)),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           );
                         },

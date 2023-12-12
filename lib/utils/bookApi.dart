@@ -59,6 +59,7 @@ class FirebaseConnector {
   }
 
   Future getAllCollection() async {
+    initializeConnector();
     try {
       CollectionReference userCollectionRef =
           userDocRef.collection(collectionName);
