@@ -251,12 +251,43 @@ class _BerandaState extends State<Beranda> {
                               snapshot.data?[index].data()['thumbnail'];
                           return InkWell(
                             onTap: () {
+                              BookInfo bookDetail = BookInfo(
+                                  title: book[index].data()['title'],
+                                  subtitle: 'Null',
+                                  authors: [book[index].data()['author']],
+                                  publisher: 'Null Publisher',
+                                  averageRating: double.parse(
+                                      book[index].data()['rating']),
+                                  categories: ['Null'],
+                                  contentVersion: 'Null',
+                                  description:
+                                      book[index].data()['description'],
+                                  industryIdentifiers: [
+                                    IndustryIdentifier(
+                                        type: 'ISBN_13',
+                                        identifier:
+                                            book[index].data()['isbn_13'])
+                                  ],
+                                  imageLinks: {
+                                    'thumbnail': Uri.parse(
+                                        book[index].data()['thumbnail'])
+                                  },
+                                  language: book[index].data()['language'],
+                                  maturityRating: 'Null',
+                                  pageCount: int.parse(
+                                      book[index].data()['pageCount']),
+                                  publishedDate: null,
+                                  rawPublishedDate: 'Null',
+                                  ratingsCount: 0,
+                                  previewLink: Uri(),
+                                  infoLink: Uri(),
+                                  canonicalVolumeLink: Uri());
+
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => BookDetailPage(
-                                        book: snapshot.data?[index],
-                                        user: widget._user)),
+                                        book: bookDetail, user: widget._user)),
                               );
                             },
                             child: Container(

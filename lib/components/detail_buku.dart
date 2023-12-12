@@ -6,11 +6,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class BookDetailPage extends StatefulWidget {
-  const BookDetailPage({Key? key, required this.book, required User user})
+  const BookDetailPage({Key? key, required BookInfo book, required User user})
       : _user = user,
+        _book = book,
         super(key: key);
   final User _user;
-  final book;
+  final BookInfo _book;
 
   @override
   State<BookDetailPage> createState() => _BookDetailPageState();
@@ -19,14 +20,14 @@ class BookDetailPage extends StatefulWidget {
 class _BookDetailPageState extends State<BookDetailPage> {
   late List booksCollection = [];
   late User user;
-  late BookInfo? book;
+  late BookInfo book;
 
   bool _isLoading = false;
 
   @override
   void initState() {
     user = widget._user;
-    book = widget.book;
+    book = widget._book;
 
     super.initState();
   }
@@ -43,262 +44,132 @@ class _BookDetailPageState extends State<BookDetailPage> {
         title: Text("Detail Buku"),
         centerTitle: true,
       ),
-      body: book is BookInfo
-          ? Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
-              child: Center(
-                child: ListView(
-                  shrinkWrap: true,
-                  children: <Widget>[
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
+        child: Center(
+          child: ListView(
+            shrinkWrap: true,
+            children: <Widget>[
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
                     Container(
-                      width: MediaQuery.of(context).size.width,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.fromLTRB(0, 5, 0, 10),
-                            width: MediaQuery.of(context).size.width * 0.5,
-                            // height: MediaQuery.of(context).size.height * 0.4,
-                            child: Card(
-                              elevation: 0,
-                              semanticContainer: true,
-                              clipBehavior: Clip.antiAliasWithSaveLayer,
-                              child: Image.network(
-                                book!.imageLinks.isEmpty
-                                    ? defaultCover
-                                    : book!.imageLinks['thumbnail'].toString(),
-                                fit: BoxFit.contain,
-                              ),
-                              // color: Color(0xFF3EC6FF),
-                            ),
-                          ),
-                          const Divider(
-                            color: kColor2,
-                          ),
-                          Text(book!.title,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 22.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: kColor1)),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10.0),
-                            child: Text(
-                                book!.authors.isEmpty
-                                    ? "Unknown Author"
-                                    : book!.authors.last,
-                                style: TextStyle(
-                                    fontSize: 15.0,
-                                    // fontWeight: FontWeight.bold,
-                                    color: kColor2)),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(24, 14, 24, 0),
-                      width: MediaQuery.of(context).size.width,
-                      height: 70,
-                      // color: Colors.blue,
+                      margin: EdgeInsets.fromLTRB(0, 5, 0, 10),
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      // height: MediaQuery.of(context).size.height * 0.4,
                       child: Card(
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                        elevation: 0,
+                        semanticContainer: true,
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        child: Image.network(
+                          book.imageLinks.isEmpty
+                              ? defaultCover
+                              : book.imageLinks['thumbnail'].toString(),
+                          fit: BoxFit.contain,
                         ),
-                        elevation: 3,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("Halaman"),
-                                Text(
-                                  book!.pageCount.toString(),
-                                  style: TextStyle(
-                                      color: Color(0xFF3EC6FF),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
-                                )
-                              ],
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("Bahasa"),
-                                Text(
-                                  book!.language,
-                                  style: TextStyle(
-                                      color: Color(0xFF3EC6FF),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
-                                )
-                              ],
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("Rating"),
-                                Text(
-                                  book!.averageRating.toString() + "/5.0",
-                                  style: TextStyle(
-                                      color: Color(0xFF3EC6FF),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.all(24),
-                      child: Text(
-                        book!.description,
-                        style: TextStyle(
-                          fontSize: 15.0,
-                          // fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.justify,
+                        // color: Color(0xFF3EC6FF),
                       ),
                     ),
                     const Divider(
                       color: kColor2,
                     ),
+                    Text(book.title,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 22.0,
+                            fontWeight: FontWeight.bold,
+                            color: kColor1)),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: Text(
+                          book.authors.isEmpty
+                              ? "Unknown Author"
+                              : book.authors.last,
+                          style: TextStyle(
+                              fontSize: 15.0,
+                              // fontWeight: FontWeight.bold,
+                              color: kColor2)),
+                    ),
                   ],
                 ),
               ),
-            )
-          : Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
-              child: Center(
-                child: ListView(
-                  shrinkWrap: true,
-                  children: <Widget>[
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
+              Container(
+                margin: EdgeInsets.fromLTRB(24, 14, 24, 0),
+                width: MediaQuery.of(context).size.width,
+                height: 70,
+                // color: Colors.blue,
+                child: Card(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  elevation: 3,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            margin: EdgeInsets.fromLTRB(0, 5, 0, 10),
-                            width: MediaQuery.of(context).size.width * 0.5,
-                            // height: MediaQuery.of(context).size.height * 0.4,
-                            child: Card(
-                              elevation: 0,
-                              semanticContainer: true,
-                              clipBehavior: Clip.antiAliasWithSaveLayer,
-                              child: Image.network(
-                                book?.data().isEmpty
-                                    ? defaultCover
-                                    : book!
-                                        .data()
-                                        .imageLinks['thumbnail']
-                                        .toString(),
-                                fit: BoxFit.contain,
-                              ),
-                              // color: Color(0xFF3EC6FF),
-                            ),
-                          ),
-                          const Divider(
-                            color: kColor2,
-                          ),
-                          Text(book.title,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 22.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: kColor1)),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10.0),
-                            child: Text(
-                                book.authors.isEmpty
-                                    ? "Unknown Author"
-                                    : book.authors.last,
-                                style: TextStyle(
-                                    fontSize: 15.0,
-                                    // fontWeight: FontWeight.bold,
-                                    color: kColor2)),
-                          ),
+                          Text("Halaman"),
+                          Text(
+                            book.pageCount.toString(),
+                            style: TextStyle(
+                                color: Color(0xFF3EC6FF),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          )
                         ],
                       ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(24, 14, 24, 0),
-                      width: MediaQuery.of(context).size.width,
-                      height: 70,
-                      // color: Colors.blue,
-                      child: Card(
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        elevation: 3,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("Halaman"),
-                                Text(
-                                  book.pageCount.toString(),
-                                  style: TextStyle(
-                                      color: Color(0xFF3EC6FF),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
-                                )
-                              ],
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("Bahasa"),
-                                Text(
-                                  book.language,
-                                  style: TextStyle(
-                                      color: Color(0xFF3EC6FF),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
-                                )
-                              ],
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("Rating"),
-                                Text(
-                                  book.averageRating.toString() + "/5.0",
-                                  style: TextStyle(
-                                      color: Color(0xFF3EC6FF),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Bahasa"),
+                          Text(
+                            book.language,
+                            style: TextStyle(
+                                color: Color(0xFF3EC6FF),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          )
+                        ],
                       ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.all(24),
-                      child: Text(
-                        book.description,
-                        style: TextStyle(
-                          fontSize: 15.0,
-                          // fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.justify,
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Rating"),
+                          Text(
+                            book.averageRating.toString() + "/5.0",
+                            style: TextStyle(
+                                color: Color(0xFF3EC6FF),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          )
+                        ],
                       ),
-                    ),
-                    const Divider(
-                      color: kColor2,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
+              Container(
+                margin: EdgeInsets.all(24),
+                child: Text(
+                  book.description,
+                  style: TextStyle(
+                    fontSize: 15.0,
+                    // fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.justify,
+                ),
+              ),
+              const Divider(
+                color: kColor2,
+              ),
+            ],
+          ),
+        ),
+      ),
       floatingActionButton: _isLoading
           ? const CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation<Color>(
@@ -326,6 +197,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                     lang: book.language,
                     pageCount: book.pageCount.toString(),
                     rating: book.averageRating.toString(),
+                    thumbnail: book.imageLinks['thumbnail'].toString(),
                     // Entahlah bagian ini aing bingung
                     isbn13: book.industryIdentifiers.isEmpty
                         ? 'Unknown ISBN'

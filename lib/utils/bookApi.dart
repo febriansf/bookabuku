@@ -83,6 +83,51 @@ class FirebaseConnector {
     }
   }
 
+  // Future addData({required BookInfo book}) async {
+  //   try {
+  //     CollectionReference userCollectionRef =
+  //         userDocRef.collection(collectionName);
+
+  //     Map<String, dynamic> newData = {};
+  //     newData = {
+  //       "title": book.title,
+  //       "subtitle": book.subtitle,
+  //       "authors": book.authors.last,
+  //       "publisher": book.publisher,
+  //       "averageRating": book.averageRating,
+  //       "categories": book.categories,
+  //       "contentVersion": book.contentVersion,
+  //       "description": book.description,
+  //       "industryIdentifiers": book.industryIdentifiers.isEmpty
+  //           ? 'Unknown ISBN'
+  //           : book.industryIdentifiers.length == 1
+  //               ? book.industryIdentifiers[0].identifier.toString()
+  //               : book.industryIdentifiers[0].type == 'ISBN_13'
+  //                   ? book.industryIdentifiers[0].identifier.toString()
+  //                   : book.industryIdentifiers[1].identifier.toString(),
+  //       "imageLinks": book.imageLinks['thumbnail'].toString(),
+  //       "language": book.language,
+  //       "maturityRating": book.maturityRating.toString(),
+  //       "pageCount": book.pageCount,
+  //       "publishedDate": book.publishedDate,
+  //       "rawPublishedDate": book.rawPublishedDate,
+  //       "ratingsCount": book.ratingsCount,
+  //       "previewLink": book.previewLink.toString(),
+  //       "infoLink": book.infoLink.toString().toString(),
+  //       "canonicalVolumeLink": book.canonicalVolumeLink,
+  //     };
+
+  //     final newDoc = await userCollectionRef.add(newData);
+
+  //     // print(newDoc.id);
+  //     debugPrint("Data Added");
+
+  //     return newDoc;
+  //   } catch (error) {
+  //     debugPrint('Error: $error');
+  //   }
+  // }
+
   Future addData(
       {required String title,
       required String author,
@@ -90,6 +135,7 @@ class FirebaseConnector {
       required String rating,
       required String lang,
       required String description,
+      required String thumbnail,
       required String isbn13}) async {
     try {
       CollectionReference userCollectionRef =
@@ -101,6 +147,7 @@ class FirebaseConnector {
         'pageCount': pageCount,
         'rating': rating,
         'language': lang,
+        'thumbnail': thumbnail,
         'description': description,
         'isbn_13': isbn13,
       };
