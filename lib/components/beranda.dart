@@ -84,34 +84,34 @@ class _BerandaState extends State<Beranda> {
                 ),
               ),
             ),
-            FutureBuilder<List>(
-              builder: (context, snapshot) {
-                // Checking if future is resolved or not
-                if (snapshot.hasData &&
-                    snapshot.connectionState == ConnectionState.done) {
-                  print('OKE');
-                  // return ListView.builder(
-                  //   shrinkWrap: true,
-                  //   scrollDirection: Axis.vertical,
-                  //   physics: NeverScrollableScrollPhysics(),
-                  //   itemCount: snapshot.data!.length,
-                  //   itemBuilder: (context, index) {
-                  //     return Text(snapshot.data?[index]['Title'] ?? "got null");
-                  //   },
-                  // );
-                }
-                // Displaying LoadingSpinner to indicate waiting state
-                return Center(
-                  child:
-                      // CircularProgressIndicator(),
-                      Text("Kamu belum memiliki koleksi buku"),
-                );
-              },
+            // FutureBuilder<List>(
+            //   builder: (context, snapshot) {
+            //     // Checking if future is resolved or not
+            //     if (snapshot.hasData &&
+            //         snapshot.connectionState == ConnectionState.done) {
+            //       print('OKE');
+            //       // return ListView.builder(
+            //       //   shrinkWrap: true,
+            //       //   scrollDirection: Axis.vertical,
+            //       //   physics: NeverScrollableScrollPhysics(),
+            //       //   itemCount: snapshot.data!.length,
+            //       //   itemBuilder: (context, index) {
+            //       //     return Text(snapshot.data?[index]['Title'] ?? "got null");
+            //       //   },
+            //       // );
+            //     }
+            //     // Displaying LoadingSpinner to indicate waiting state
+            //     return Center(
+            //       child:
+            //           // CircularProgressIndicator(),
+            //           Text("Kamu belum memiliki koleksi buku"),
+            //     );
+            //   },
 
-              // Future that needs to be resolved
-              // inorder to display something on the Canvas
-              future: getData(),
-            ),
+            //   // Future that needs to be resolved
+            //   // inorder to display something on the Canvas
+            //   future: getData(),
+            // ),
             Container(
               width: MediaQuery.of(context).size.width,
               margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
@@ -240,7 +240,7 @@ class _BerandaState extends State<Beranda> {
                   final book = snapshot.data;
                   return Center(
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: List.generate(
                         book!.length,
@@ -249,103 +249,126 @@ class _BerandaState extends State<Beranda> {
                           String rating = book[index].data()?['rating'];
                           String image =
                               snapshot.data?[index].data()['thumbnail'];
-                          return InkWell(
-                            onTap: () {
-                              BookInfo bookDetail = BookInfo(
-                                  title: book[index].data()['title'],
-                                  subtitle: 'Null',
-                                  authors: [book[index].data()['author']],
-                                  publisher: 'Null Publisher',
-                                  averageRating: double.parse(
-                                      book[index].data()['rating']),
-                                  categories: ['Null'],
-                                  contentVersion: 'Null',
-                                  description:
-                                      book[index].data()['description'],
-                                  industryIdentifiers: [
-                                    IndustryIdentifier(
-                                        type: 'ISBN_13',
-                                        identifier:
-                                            book[index].data()['isbn_13'])
-                                  ],
-                                  imageLinks: {
-                                    'thumbnail': Uri.parse(
-                                        book[index].data()['thumbnail'])
-                                  },
-                                  language: book[index].data()['language'],
-                                  maturityRating: 'Null',
-                                  pageCount: int.parse(
-                                      book[index].data()['pageCount']),
-                                  publishedDate: null,
-                                  rawPublishedDate: 'Null',
-                                  ratingsCount: 0,
-                                  previewLink: Uri(),
-                                  infoLink: Uri(),
-                                  canonicalVolumeLink: Uri());
+                          return Column(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  BookInfo bookDetail = BookInfo(
+                                      title: book[index].data()['title'],
+                                      subtitle: 'Null',
+                                      authors: [book[index].data()['author']],
+                                      publisher: 'Null Publisher',
+                                      averageRating: double.parse(
+                                          book[index].data()['rating']),
+                                      categories: ['Null'],
+                                      contentVersion: 'Null',
+                                      description:
+                                          book[index].data()['description'],
+                                      industryIdentifiers: [
+                                        IndustryIdentifier(
+                                            type: 'ISBN_13',
+                                            identifier:
+                                                book[index].data()['isbn_13'])
+                                      ],
+                                      imageLinks: {
+                                        'thumbnail': Uri.parse(
+                                            book[index].data()['thumbnail'])
+                                      },
+                                      language: book[index].data()['language'],
+                                      maturityRating: 'Null',
+                                      pageCount: int.parse(
+                                          book[index].data()['pageCount']),
+                                      publishedDate: null,
+                                      rawPublishedDate: 'Null',
+                                      ratingsCount: 0,
+                                      previewLink: Uri(),
+                                      infoLink: Uri(),
+                                      canonicalVolumeLink: Uri());
 
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => BookDetailPage(
-                                        book: bookDetail, user: widget._user)),
-                              );
-                            },
-                            child: Container(
-                              width: 180,
-                              // color: Colors.blue,
-                              margin: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    // width: 190,
-                                    margin: EdgeInsets.only(bottom: 10),
-                                    child: Card(
-                                      elevation: 0,
-                                      semanticContainer: true,
-                                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                                      child: Image.network(
-                                        image,
-                                        fit: BoxFit.contain,
-                                      ),
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => BookDetailPage(
+                                          book: bookDetail, user: widget._user),
                                     ),
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                                  );
+                                },
+                                child: Container(
+                                  width: 180,
+                                  // color: Colors.blue,
+                                  margin:
+                                      const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                                  child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      Text(title,
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.bold,
-                                              color: Color(0xFF3EC6FF))),
-                                      // Text("authorName",
-                                      //     style: TextStyle(
-                                      //         fontSize: 15.0,
-                                      //         // fontWeight: FontWeight.bold,
-                                      //         color: kColor5)),
-                                      Row(
+                                      Container(
+                                        // width: 190,
+                                        margin: EdgeInsets.only(bottom: 10),
+                                        child: Card(
+                                          elevation: 0,
+                                          semanticContainer: true,
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          child: Image.network(
+                                            image,
+                                            fit: BoxFit.contain,
+                                          ),
+                                        ),
+                                      ),
+                                      Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
                                         children: [
-                                          Icon(
-                                            Icons.star,
-                                            color: kColor5,
-                                            size: 17,
-                                          ),
-                                          Text(rating.toString() + " / 5.0",
+                                          Text(title,
+                                              textAlign: TextAlign.center,
                                               style: TextStyle(
-                                                  fontSize: 15.0,
-                                                  color: kColor5)),
+                                                  fontSize: 16.0,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Color(0xFF3EC6FF))),
+                                          // Text("authorName",
+                                          //     style: TextStyle(
+                                          //         fontSize: 15.0,
+                                          //         // fontWeight: FontWeight.bold,
+                                          //         color: kColor5)),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Icon(
+                                                Icons.star,
+                                                color: kColor5,
+                                                size: 17,
+                                              ),
+                                              Text(rating.toString() + " / 5.0",
+                                                  style: TextStyle(
+                                                      fontSize: 15.0,
+                                                      color: kColor5)),
+                                            ],
+                                          )
                                         ],
-                                      )
+                                      ),
                                     ],
                                   ),
-                                ],
+                                ),
                               ),
-                            ),
+                              IconButton(
+                                  onPressed: () async {
+                                    FirebaseConnector myConnector =
+                                        FirebaseConnector(
+                                            widget._user.uid, 'myBooks');
+                                    myConnector.initializeConnector();
+
+                                    myConnector.deleteData(book[index].id);
+                                    setState(() {});
+                                  },
+                                  icon: Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                  ))
+                            ],
                           );
                         },
                       ),
@@ -354,7 +377,9 @@ class _BerandaState extends State<Beranda> {
                 }
                 // Displaying LoadingSpinner to indicate waiting state
                 return Center(
-                  child: CircularProgressIndicator(),
+                  child:
+                      // CircularProgressIndicator(),
+                      Text('Anda tidak mempunyai koleksi'),
                 );
               },
 
@@ -390,7 +415,7 @@ class _BerandaState extends State<Beranda> {
                     snapshot.connectionState == ConnectionState.done) {
                   return Center(
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: List.generate(
                         snapshot.data!.length,
